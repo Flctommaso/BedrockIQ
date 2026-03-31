@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- Google Translate auto-detect -->
+<meta name="google" content="notranslate">
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'it',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<title>Bedrock — Strong foundations. Real results.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --ink:    #0f0e0c;
+  --cream:  #f5f0e8;
+  --warm:   #ede5d4;
+  --paper:  #faf7f2;
+  --gold:   #c8a96e;
+  --border: #d4c9b0;
+  --muted:  #8a7d6a;
+  --green:  #2a6040;
+  --amber:  #c8703a;
+  --red:    #b84040;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 999;
+  padding: calc(var(--safe-top) + 14px) clamp(20px, 5vw, 40px) 14px;
+  background: rgba(15,14,12,0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(200,169,110,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.nav-logo-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--cream);
+  line-height: 1;
+}
+.nav-logo-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 2px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.45);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  flex-shrink: 0;
+  padding: 10px 22px;
+  background: var(--gold);
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { opacity: 0.85; }
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--cream);
+  transition: all 0.3s;
+}
+.nav-mobile {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background: var(--ink);
+  padding: 100px 28px 40px;
+  flex-direction: column;
+  gap: 8px;
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+  transition: color 0.2s;
+}
+.nav-mobile a:hover, .nav-mobile a:active { color: var(--gold); }
+.nav-mobile .nav-mobile-cta {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--gold);
+  border-radius: 4px;
+  text-align: center;
+  color: var(--ink);
+  font-weight: 500;
+  border-bottom: none;
+}
+
+/* ─────────────────────────────────────────
+   LAYOUT HELPERS
+───────────────────────────────────────── */
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 40px);
+}
+.section-pad {
+  padding: clamp(64px, 10vw, 110px) 0;
+}
+
+/* ─────────────────────────────────────────
+   EYEBROW
+───────────────────────────────────────── */
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.h2-dark {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 14px;
+}
+.h2-light {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.lead-dark {
+  font-size: clamp(14px, 1.8vw, 16px);
+  line-height: 1.7;
+  color: rgba(245,240,232,0.5);
+  max-width: 540px;
+}
+.lead-light {
+  font-size: clamp(14px, 1.8vw, 16px);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 540px;
+}
+
+/* ─────────────────────────────────────────
+   BUTTONS
+───────────────────────────────────────── */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  background: var(--gold);
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+  transition: opacity 0.15s;
+  cursor: pointer;
+  border: none;
+}
+.btn-gold:hover { opacity: 0.85; }
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  border: 1.5px solid rgba(200,169,110,0.3);
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.55);
+  transition: all 0.2s;
+  cursor: pointer;
+  background: transparent;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  background: var(--ink);
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  transition: opacity 0.15s;
+  cursor: pointer;
+  border: none;
+}
+.btn-dark:hover { opacity: 0.85; }
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero {
+  min-height: 100svh;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--safe-top) + 80px);
+  padding-bottom: 60px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: min(700px, 90vw);
+  height: min(700px, 90vw);
+  background: radial-gradient(circle, rgba(200,169,110,0.055) 0%, transparent 68%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -10%; left: -5%;
+  width: min(400px, 60vw);
+  height: min(400px, 60vw);
+  background: radial-gradient(circle, rgba(42,96,64,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+.hero-left { animation: fadeUp 0.65s ease both; }
+.hero-right { animation: fadeUp 0.65s 0.18s ease both; }
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--gold);
+}
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(44px, 5.5vw, 76px);
+  line-height: 1.04;
+  color: var(--cream);
+  margin-bottom: 22px;
+}
+.hero-h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-sub {
+  font-size: clamp(14px, 1.8vw, 16px);
+  line-height: 1.75;
+  color: rgba(245,240,232,0.5);
+  max-width: 580px;
+  margin-bottom: 44px;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Right side — two product cards */
+.hero-products {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.product-card {
+  border-radius: 10px;
+  padding: clamp(20px, 3vw, 28px);
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.5vw, 24px);
+  transition: transform 0.22s, border-color 0.22s;
+  text-decoration: none;
+}
+.product-card:hover { transform: translateY(-3px); }
+.product-card.card-check {
+  background: rgba(200,169,110,0.07);
+  border: 1px solid rgba(200,169,110,0.18);
+}
+.product-card.card-check:hover { border-color: rgba(200,169,110,0.45); }
+.product-card.card-iq {
+  background: rgba(42,96,64,0.08);
+  border: 1px solid rgba(42,96,64,0.2);
+}
+.product-card.card-iq:hover { border-color: rgba(42,96,64,0.5); }
+.product-card-icon {
+  font-size: clamp(28px, 4vw, 36px);
+  flex-shrink: 0;
+}
+.product-card-body { flex: 1; min-width: 0; }
+.product-card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+.product-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 5px;
+}
+.product-card-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(245,240,232,0.38);
+}
+.product-card-arrow {
+  font-size: 18px;
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.product-card:hover .product-card-arrow { transform: translateX(4px); }
+
+/* ─────────────────────────────────────────
+   BRAND STRIP
+───────────────────────────────────────── */
+.brand-strip {
+  background: var(--gold);
+  padding: 18px clamp(20px,5vw,40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 5vw, 60px);
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+.strip-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(15,14,12,0.55);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.strip-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(15,14,12,0.25);
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   HEALTH CHECK SECTION
+───────────────────────────────────────── */
+.check-section { background: var(--cream); }
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+.check-areas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.check-area {
+  background: var(--ink);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid rgba(200,169,110,0.1);
+  transition: border-color 0.2s;
+}
+.check-area:hover { border-color: rgba(200,169,110,0.3); }
+.check-area-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.check-area-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.check-area-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(245,240,232,0.28);
+}
+.check-score-preview {
+  background: var(--ink);
+  border-radius: 12px;
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(200,169,110,0.12);
+  margin-top: 20px;
+}
+.score-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.score-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.score-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1;
+}
+.score-max {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(245,240,232,0.2);
+}
+.verdict-chip {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--amber);
+  color: #fff;
+  margin-bottom: 16px;
+}
+.score-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.score-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.score-bar-label {
+  font-size: 10px;
+  color: rgba(245,240,232,0.35);
+  width: 110px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.score-bar-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(200,169,110,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--gold);
+}
+.score-bar-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(245,240,232,0.25);
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   IQ SECTION
+───────────────────────────────────────── */
+.iq-section { background: var(--ink); }
+.iq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+.iq-modules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.iq-mod {
+  background: rgba(200,169,110,0.05);
+  border: 1px solid rgba(200,169,110,0.1);
+  border-radius: 8px;
+  padding: 16px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.iq-mod:hover {
+  border-color: rgba(200,169,110,0.28);
+  background: rgba(200,169,110,0.09);
+}
+.iq-mod-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  opacity: 0.6;
+  margin-bottom: 6px;
+}
+.iq-mod-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.iq-mod-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+}
+.iq-right-content { padding-top: 8px; }
+.iq-feature-list {
+  list-style: none;
+  margin: 28px 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.iq-feature-list li {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(245,240,232,0.55);
+}
+.iq-feature-list li::before {
+  content: '→';
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.iq-pricing-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.iq-price-tag {
+  background: rgba(200,169,110,0.07);
+  border: 1px solid rgba(200,169,110,0.15);
+  border-radius: 6px;
+  padding: 10px 16px;
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+}
+.iq-price-tag-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.iq-price-tag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.25);
+}
+
+/* ─────────────────────────────────────────
+   HOW IT WORKS — PREMIUM
+───────────────────────────────────────── */
+.flow-section { background: var(--ink); }
+
+.flow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.flow-header-right {
+  font-size: 13px;
+  color: rgba(245,240,232,0.3);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flow-header-right::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: rgba(245,240,232,0.15);
+}
+
+/* Main timeline row */
+.flow-timeline {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  margin-bottom: 0;
+}
+.flow-arrow-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(8px, 2vw, 20px);
+  position: relative;
+}
+.flow-arrow-line {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(200,169,110,0.2), rgba(200,169,110,0.6), rgba(200,169,110,0.2));
+  transform: translateY(-50%);
+}
+.flow-arrow-head {
+  position: relative;
+  z-index: 2;
+  width: 36px; height: 36px;
+  background: var(--ink);
+  border: 1.5px solid rgba(200,169,110,0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 13px;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+/* Step card */
+.flow-card {
+  background: rgba(245,240,232,0.03);
+  border: 1px solid rgba(200,169,110,0.1);
+  border-radius: 12px;
+  padding: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, background 0.3s;
+  cursor: default;
+}
+.flow-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.flow-card:hover {
+  border-color: rgba(200,169,110,0.3);
+  background: rgba(245,240,232,0.055);
+}
+.flow-card:hover::before { opacity: 1; }
+.flow-card:hover + .flow-arrow-col .flow-arrow-head {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+.flow-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.flow-big-num {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(52px, 6vw, 80px);
+  line-height: 1;
+  color: rgba(200,169,110,0.12);
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+  user-select: none;
+}
+.flow-card:hover .flow-big-num { color: rgba(200,169,110,0.22); }
+
+.flow-card-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(200,169,110,0.08);
+  border: 1px solid rgba(200,169,110,0.15);
+  padding: 5px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.flow-card-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: block;
+  line-height: 1;
+}
+.flow-card-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(18px, 2.2vw, 23px);
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.flow-card-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(245,240,232,0.42);
+  flex: 1;
+}
+.flow-card-detail {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(200,169,110,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.flow-card-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.22);
+}
+.flow-card-detail-item::before {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+/* Bottom outcome bar */
+.flow-outcome {
+  margin-top: 40px;
+  background: rgba(200,169,110,0.06);
+  border: 1px solid rgba(200,169,110,0.12);
+  border-radius: 10px;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.flow-outcome-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.flow-outcome-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(200,169,110,0.15);
+  flex-shrink: 0;
+}
+.flow-outcome-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(245,240,232,0.7);
+  font-style: italic;
+  flex: 1;
+}
+.flow-outcome-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: gap 0.2s;
+}
+.flow-outcome-cta:hover { gap: 12px; }
+
+@media (max-width: 900px) {
+  .flow-timeline {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .flow-arrow-col {
+    height: 44px;
+    padding: 0;
+  }
+  .flow-arrow-line {
+    top: 0; bottom: 0; left: 50%; right: auto;
+    width: 1px; height: 100%;
+    transform: none;
+    background: linear-gradient(180deg, rgba(200,169,110,0.2), rgba(200,169,110,0.6), rgba(200,169,110,0.2));
+  }
+  .flow-arrow-head { transform: rotate(90deg); }
+  .flow-outcome { flex-direction: column; align-items: flex-start; }
+  .flow-outcome-divider { width: 28px; height: 1px; }
+}
+
+/* ─────────────────────────────────────────
+   FINAL CTA BAND
+───────────────────────────────────────── */
+.cta-band {
+  background: var(--gold);
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 40px);
+}
+.cta-band-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+.cta-band-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(15,14,12,0.5);
+  margin-bottom: 10px;
+}
+.cta-band-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(26px, 3.5vw, 42px);
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.cta-band-sub {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(15,14,12,0.58);
+  max-width: 440px;
+}
+.cta-band-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(200,169,110,0.08);
+  padding: clamp(48px, 7vw, 72px) clamp(20px, 5vw, 40px) calc(clamp(28px,4vw,40px) + var(--safe-bot));
+}
+.footer-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: clamp(28px, 5vw, 48px);
+  margin-bottom: 48px;
+}
+.footer-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+.footer-brand-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 14px;
+}
+.footer-brand-text {
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(245,240,232,0.28);
+  max-width: 240px;
+}
+.footer-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.footer-links a {
+  font-size: 12px;
+  color: rgba(245,240,232,0.35);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-bottom {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(200,169,110,0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: rgba(245,240,232,0.18);
+}
+
+/* ─────────────────────────────────────────
+   CONTACT SECTION
+───────────────────────────────────────── */
+.contact-section { background: var(--warm); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+.contact-form {
+  background: var(--ink);
+  border-radius: 12px;
+  padding: clamp(28px, 4vw, 44px);
+  border: 1px solid rgba(200,169,110,0.1);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+.form-group.full { grid-column: 1 / -1; }
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.form-input, .form-select, .form-textarea {
+  background: rgba(245,240,232,0.04);
+  border: 1px solid rgba(200,169,110,0.15);
+  border-radius: 6px;
+  padding: 13px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-appearance: none;
+  width: 100%;
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: rgba(245,240,232,0.2); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: rgba(200,169,110,0.5);
+  background: rgba(245,240,232,0.07);
+}
+.form-textarea { resize: vertical; min-height: 110px; }
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8a96e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.form-select option { background: var(--ink); color: var(--cream); }
+.form-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--gold);
+  border: none;
+  border-radius: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  margin-top: 6px;
+}
+.form-submit:hover { opacity: 0.87; }
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 32px 20px;
+}
+.form-success-icon { font-size: 40px; margin-bottom: 16px; }
+.form-success-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.form-success-text {
+  font-size: 13px;
+  color: rgba(245,240,232,0.45);
+  line-height: 1.6;
+}
+.contact-info { padding-top: 8px; }
+.contact-info-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+.contact-info-icon {
+  width: 44px; height: 44px;
+  background: rgba(200,169,110,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.contact-info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.contact-info-val {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.contact-info-sub {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.contact-note {
+  background: rgba(200,169,110,0.12);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 18px 20px;
+  margin-top: 32px;
+}
+.contact-note-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.contact-note-text strong { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 540px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — TABLET ≤ 900px
+───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .check-grid { grid-template-columns: 1fr; }
+  .check-areas { order: 2; }
+  .check-left-content { order: 1; }
+  .iq-grid { grid-template-columns: 1fr; }
+  .iq-modules { order: 2; }
+  
+  
+  .cta-band-inner { grid-template-columns: 1fr; }
+  .cta-band-actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — MOBILE ≤ 540px
+───────────────────────────────────────── */
+@media (max-width: 540px) {
+  .check-areas { grid-template-columns: 1fr 1fr; }
+  .iq-modules { grid-template-columns: 1fr 1fr; }
+  .iq-pricing-row .iq-price-tag { min-width: 60px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .cta-band-actions { flex-direction: column; }
+  .btn-gold, .btn-outline, .btn-dark { width: 100%; justify-content: center; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn-gold,
+  .hero-actions .btn-outline { width: 100%; justify-content: center; }
+}
+
+/* ── LANG SELECTOR ── */
+.lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid rgba(200,169,110,0.2);
+  border-radius: 4px;
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+  position: relative;
+}
+.lang-selector:hover { border-color: var(--gold); }
+.lang-globe { font-size: 13px; line-height: 1; }
+.lang-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(245,240,232,0.5);
+  transition: color 0.2s;
+}
+.lang-selector:hover .lang-label { color: var(--gold); }
+.lang-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--ink);
+  border: 1px solid rgba(200,169,110,0.2);
+  border-radius: 6px;
+  overflow: hidden;
+  min-width: 120px;
+  z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.lang-dropdown.open { display: block; }
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.45);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  border-bottom: 1px solid rgba(200,169,110,0.06);
+}
+.lang-option:last-child { border-bottom: none; }
+.lang-option:hover { background: rgba(200,169,110,0.07); color: var(--gold); }
+.lang-option.active { color: var(--gold); }
+@media (max-width: 900px) {
+  .lang-selector { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+  NAV
+══════════════════════════════════════ -->
+<nav class="nav">
+  <a href="https://bedrock-de2.pages.dev/" class="nav-logo">
+    <div class="nav-logo-name">Bedrock</div>
+    <div class="nav-logo-tag">Strong foundations. Real results.</div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#come-funziona">Come funziona</a></li>
+    <li><a href="#health-check">Health Check</a></li>
+    <li><a href="#iq">Bedrock IQ</a></li>
+    <li><a href="#contatti">Contatti</a></li>
+  </ul>
+
+  <a href="#health-check" class="nav-cta">Inizia gratis</a>
+
+
+  <!-- Language selector -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <div class="lang-selector" id="langSelector" title="Change language">
+    <span class="lang-globe">🌐</span>
+    <span class="lang-label">IT</span>
+  </div>
+
+  <!-- Hidden lang dropdown -->
+  <div class="lang-dropdown" id="langDropdown">
+    <div class="lang-option active" onclick="setLang('it','IT')">🇮🇹 Italiano</div>
+    <div class="lang-option" onclick="setLang('en','EN')">🇬🇧 English</div>
+    <div class="lang-option" onclick="setLang('es','ES')">🇪🇸 Español</div>
+    <div class="lang-option" onclick="setLang('fr','FR')">🇫🇷 Français</div>
+    <div class="lang-option" onclick="setLang('de','DE')">🇩🇪 Deutsch</div>
+  </div>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="nav-mobile" id="mobileMenu">
+  <a href="#come-funziona" onclick="toggleMenu()">Come funziona</a>
+  <a href="#health-check" onclick="toggleMenu()">Health Check</a>
+  <a href="#iq" onclick="toggleMenu()">Bedrock IQ</a>
+  <a href="#contatti" onclick="toggleMenu()">Contatti</a>
+  <a href="#health-check" class="nav-mobile-cta" onclick="toggleMenu()">Inizia gratis →</a>
+</div>
+
+
+<!-- ══════════════════════════════════════
+  HERO
+══════════════════════════════════════ -->
+<section class="hero">
+  <div class="wrap" style="width:100%;">
+    <div class="hero-grid">
+
+      <div class="hero-left">
+        <div class="hero-eyebrow">Bedrock</div>
+        <h1 class="hero-h1">
+          Fondamenta solide.<br>
+          <em>Risultati veri.</em>
+        </h1>
+        <p class="hero-sub">
+          Due strumenti per costruire un ristorante che funziona davvero.
+          Diagnosi operativa gratuita e formazione pratica per chef e titolari.
+        </p>
+        <div class="hero-actions">
+          <a href="#health-check" class="btn-gold">Fai la diagnosi gratis →</a>
+          <a href="#iq" class="btn-outline">Scopri Bedrock IQ</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-products">
+          <a href="#health-check" class="product-card card-check">
+            <div class="product-card-icon">📋</div>
+            <div class="product-card-body">
+              <div class="product-card-label">Gratuito · 15 minuti</div>
+              <div class="product-card-name">Bedrock Health Check</div>
+              <div class="product-card-desc">58 voci su 8 aree. Score, classificazione e piano d'azione immediato via email.</div>
+            </div>
+            <div class="product-card-arrow">→</div>
+          </a>
+
+          <a href="#iq" class="product-card card-iq">
+            <div class="product-card-icon">🎓</div>
+            <div class="product-card-body">
+              <div class="product-card-label">Formazione · 8 moduli</div>
+              <div class="product-card-name">Bedrock IQ</div>
+              <div class="product-card-desc">Video lezioni, template operativi e sessioni live per chef e responsabili cucina.</div>
+            </div>
+            <div class="product-card-arrow">→</div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BRAND STRIP -->
+<div class="brand-strip">
+  <div class="strip-item"><span class="strip-dot"></span>Diagnostica operativa</div>
+  <div class="strip-item"><span class="strip-dot"></span>8 aree di analisi</div>
+  <div class="strip-item"><span class="strip-dot"></span>Formazione pratica</div>
+  <div class="strip-item"><span class="strip-dot"></span>Materiali scaricabili</div>
+  <div class="strip-item"><span class="strip-dot"></span>Sessioni live</div>
+  <div class="strip-item"><span class="strip-dot"></span>Report automatico</div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+  COME FUNZIONA
+══════════════════════════════════════ -->
+<section id="come-funziona" class="flow-section section-pad">
+  <div class="wrap">
+
+    <div class="flow-header">
+      <div>
+        <div class="eyebrow">Il metodo</div>
+        <h2 class="h2-dark">Dalla diagnosi all'azione</h2>
+      </div>
+      <div class="flow-header-right">3 passaggi</div>
+    </div>
+
+    <div class="flow-timeline">
+
+      <!-- STEP 01 -->
+      <div class="flow-card">
+        <div class="flow-card-top">
+          <div class="flow-big-num">01</div>
+          <div class="flow-card-badge">Gratuito</div>
+        </div>
+        <span class="flow-card-icon">📋</span>
+        <div class="flow-card-title">Fai il<br>Health Check</div>
+        <div class="flow-card-text">
+          58 voci operative su 8 aree del tuo locale. Compili il questionario in 15 minuti e ricevi subito il tuo Indice di Salute via email. Nessun venditore. Solo dati.
+        </div>
+        <div class="flow-card-detail">
+          <div class="flow-card-detail-item">58 voci su 8 aree</div>
+          <div class="flow-card-detail-item">Report automatico via email</div>
+          <div class="flow-card-detail-item">15 minuti · Gratis</div>
+        </div>
+      </div>
+
+      <!-- ARROW -->
+      <div class="flow-arrow-col">
+        <div class="flow-arrow-line"></div>
+        <div class="flow-arrow-head">→</div>
+      </div>
+
+      <!-- STEP 02 -->
+      <div class="flow-card">
+        <div class="flow-card-top">
+          <div class="flow-big-num">02</div>
+          <div class="flow-card-badge">Report</div>
+        </div>
+        <span class="flow-card-icon">🎯</span>
+        <div class="flow-card-title">Leggi il tuo<br>punto critico</div>
+        <div class="flow-card-text">
+          Il report classifica ogni area — da Eccellente a Critica — e ti dice esattamente dove stai perdendo margine. Non opinioni: dati reali dal tuo locale, con azioni prioritarie.
+        </div>
+        <div class="flow-card-detail">
+          <div class="flow-card-detail-item">Score per ogni area</div>
+          <div class="flow-card-detail-item">Classificazione 5 livelli</div>
+          <div class="flow-card-detail-item">Piano d'azione immediato</div>
+        </div>
+      </div>
+
+      <!-- ARROW -->
+      <div class="flow-arrow-col">
+        <div class="flow-arrow-line"></div>
+        <div class="flow-arrow-head">→</div>
+      </div>
+
+      <!-- STEP 03 -->
+      <div class="flow-card">
+        <div class="flow-card-top">
+          <div class="flow-big-num">03</div>
+          <div class="flow-card-badge">Formazione</div>
+        </div>
+        <span class="flow-card-icon">📚</span>
+        <div class="flow-card-title">Forma il team<br>con Bedrock IQ</div>
+        <div class="flow-card-text">
+          Acquisti solo il modulo per l'area critica identificata dal tuo score. Video lezioni pratiche, template operativi pronti da usare e sessioni live mensili.
+        </div>
+        <div class="flow-card-detail">
+          <div class="flow-card-detail-item">8 moduli su misura</div>
+          <div class="flow-card-detail-item">Template e PDF inclusi</div>
+          <div class="flow-card-detail-item">Risultati dal giorno dopo</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- OUTCOME BAR -->
+    <div class="flow-outcome">
+      <div class="flow-outcome-label">Risultato</div>
+      <div class="flow-outcome-divider"></div>
+      <div class="flow-outcome-text">
+        Un locale che funziona anche senza di te — con numeri che lo dimostrano.
+      </div>
+      <a href="#health-check" class="flow-outcome-cta">
+        Inizia gratis →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+  HEALTH CHECK
+══════════════════════════════════════ -->
+<section id="health-check" class="check-section section-pad">
+  <div class="wrap">
+    <div class="check-grid">
+
+      <div class="check-left-content">
+        <div class="eyebrow">Bedrock Health Check</div>
+        <h2 class="h2-light">Scopri dove<br>perdi margine</h2>
+        <p class="lead-light" style="margin-bottom:28px;">
+          58 voci operative su 8 aree. Ricevi il tuo Indice di Salute e un piano d'azione immediato via email. Gratis, in 15 minuti.
+        </p>
+
+        <div class="check-score-preview">
+          <div class="score-row">
+            <div class="score-label">Indice di salute · Esempio</div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px;">
+            <div class="score-big">34</div>
+            <div class="score-max">/58</div>
+          </div>
+          <div class="verdict-chip">Instabile</div>
+          <div class="score-bars">
+            <div class="score-bar-row">
+              <div class="score-bar-label">Food Cost</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:50%"></div></div>
+              <div class="score-bar-val">4/8</div>
+            </div>
+            <div class="score-bar-row">
+              <div class="score-bar-label">Sprechi</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:33%"></div></div>
+              <div class="score-bar-val">2/6</div>
+            </div>
+            <div class="score-bar-row">
+              <div class="score-bar-label">Operativa</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:75%"></div></div>
+              <div class="score-bar-val">6/8</div>
+            </div>
+            <div class="score-bar-row">
+              <div class="score-bar-label">Team</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:62%"></div></div>
+              <div class="score-bar-val">5/8</div>
+            </div>
+            <div class="score-bar-row">
+              <div class="score-bar-label">Cliente</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:50%"></div></div>
+              <div class="score-bar-val">4/8</div>
+            </div>
+            <div class="score-bar-row">
+              <div class="score-bar-label">Strutturale</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:87%"></div></div>
+              <div class="score-bar-val">7/8</div>
+            </div>
+            <div class="score-bar-row">
+              <div class="score-bar-label">SOP</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:33%"></div></div>
+              <div class="score-bar-val">2/6</div>
+            </div>
+            <div class="score-bar-row">
+              <div class="score-bar-label">HACCP</div>
+              <div class="score-bar-track"><div class="score-bar-fill" style="width:66%"></div></div>
+              <div class="score-bar-val">4/6</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:28px;">
+          <a href="https://bedrockhealth.netlify.app" target="_blank" class="btn-gold">
+            Fai il Health Check →
+          </a>
+        </div>
+      </div>
+
+      <div class="check-areas">
+        <div class="check-area">
+          <div class="check-area-num">01</div>
+          <div class="check-area-name">Food Cost &amp; Controllo Costi</div>
+          <div class="check-area-count">8 voci</div>
+        </div>
+        <div class="check-area">
+          <div class="check-area-num">02</div>
+          <div class="check-area-name">Gestione Sprechi</div>
+          <div class="check-area-count">6 voci</div>
+        </div>
+        <div class="check-area">
+          <div class="check-area-num">03</div>
+          <div class="check-area-name">Stabilità Operativa</div>
+          <div class="check-area-count">8 voci</div>
+        </div>
+        <div class="check-area">
+          <div class="check-area-num">04</div>
+          <div class="check-area-name">Stabilità del Team</div>
+          <div class="check-area-count">8 voci</div>
+        </div>
+        <div class="check-area">
+          <div class="check-area-num">05</div>
+          <div class="check-area-name">Esperienza Cliente</div>
+          <div class="check-area-count">8 voci</div>
+        </div>
+        <div class="check-area">
+          <div class="check-area-num">06</div>
+          <div class="check-area-name">Stabilità Strutturale</div>
+          <div class="check-area-count">8 voci</div>
+        </div>
+        <div class="check-area">
+          <div class="check-area-num">07</div>
+          <div class="check-area-name">Standard Operativi</div>
+          <div class="check-area-count">6 voci</div>
+        </div>
+        <div class="check-area">
+          <div class="check-area-num">08</div>
+          <div class="check-area-name">Igiene &amp; Sicurezza</div>
+          <div class="check-area-count">6 voci</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+  BEDROCK IQ
+══════════════════════════════════════ -->
+<section id="iq" class="iq-section section-pad">
+  <div class="wrap">
+    <div class="iq-grid">
+
+      <div class="iq-modules">
+        <div class="iq-mod">
+          <div class="iq-mod-num">M1</div>
+          <div class="iq-mod-name">Food Cost Mastery</div>
+          <div class="iq-mod-price">€127</div>
+        </div>
+        <div class="iq-mod">
+          <div class="iq-mod-num">M2</div>
+          <div class="iq-mod-name">Zero Sprechi</div>
+          <div class="iq-mod-price">€97</div>
+        </div>
+        <div class="iq-mod">
+          <div class="iq-mod-num">M3</div>
+          <div class="iq-mod-name">Cucina che Gira</div>
+          <div class="iq-mod-price">€127</div>
+        </div>
+        <div class="iq-mod">
+          <div class="iq-mod-num">M4</div>
+          <div class="iq-mod-name">Team che Regge</div>
+          <div class="iq-mod-price">€127</div>
+        </div>
+        <div class="iq-mod">
+          <div class="iq-mod-num">M5</div>
+          <div class="iq-mod-name">Ospite al Centro</div>
+          <div class="iq-mod-price">€97</div>
+        </div>
+        <div class="iq-mod">
+          <div class="iq-mod-num">M6</div>
+          <div class="iq-mod-name">Locale Blindato</div>
+          <div class="iq-mod-price">€97</div>
+        </div>
+        <div class="iq-mod">
+          <div class="iq-mod-num">M7</div>
+          <div class="iq-mod-name">SOP &amp; Procedure</div>
+          <div class="iq-mod-price">€127</div>
+        </div>
+        <div class="iq-mod">
+          <div class="iq-mod-num">M8</div>
+          <div class="iq-mod-name">HACCP &amp; Igiene</div>
+          <div class="iq-mod-price">€97</div>
+        </div>
+      </div>
+
+      <div class="iq-right-content">
+        <div class="eyebrow">Bedrock IQ</div>
+        <h2 class="h2-dark">Formazione operativa.<br>Risultati il giorno dopo.</h2>
+        <ul class="iq-feature-list">
+          <li>8 moduli video su ogni area del Health Check — acquisti solo quello che ti serve</li>
+          <li>Template Excel, PDF operativi e schede da appendere in cucina</li>
+          <li>Sessioni live mensili di gruppo per domande reali dal tuo locale</li>
+          <li>Accesso illimitato e aggiornamenti inclusi</li>
+          <li>Con il pacchetto Pro: 3 sessioni 1:1 + supporto WhatsApp 3 mesi</li>
+        </ul>
+
+        <div class="iq-pricing-row">
+          <div class="iq-price-tag">
+            <div class="iq-price-tag-val">€97</div>
+            <div class="iq-price-tag-label">Modulo singolo</div>
+          </div>
+          <div class="iq-price-tag">
+            <div class="iq-price-tag-val">€697</div>
+            <div class="iq-price-tag-label">Pacchetto completo</div>
+          </div>
+          <div class="iq-price-tag">
+            <div class="iq-price-tag-val">€1.197</div>
+            <div class="iq-price-tag-label">Bedrock Pro</div>
+          </div>
+        </div>
+
+        <a href="#iq" class="btn-gold">Scopri Bedrock IQ →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+  CTA BAND
+══════════════════════════════════════ -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <div>
+      <div class="cta-band-tag">Inizia adesso</div>
+      <div class="cta-band-title">Il margine si perde ogni giorno.<br>Inizia da qui.</div>
+      <p class="cta-band-sub">
+        Fai il Health Check gratuito in 15 minuti.
+        Ricevi il report operativo via email.
+        Poi decidi se e come formarti con Bedrock IQ.
+      </p>
+    </div>
+    <div class="cta-band-actions">
+      <a href="https://bedrockhealth.netlify.app" target="_blank" class="btn-dark">
+        Health Check gratuito →
+      </a>
+      <a href="#iq" class="btn-dark" style="border:1.5px solid rgba(15,14,12,0.25);background:transparent;color:rgba(15,14,12,0.6);">
+        Bedrock IQ
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+  CONTATTI
+══════════════════════════════════════ -->
+<section id="contatti" class="contact-section section-pad">
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <div class="contact-info">
+        <div class="eyebrow">Contatti</div>
+        <h2 class="h2-light">Parliamo del<br>tuo locale.</h2>
+        <p class="lead-light" style="margin-bottom:40px;">
+          Vuoi sapere di più su Bedrock IQ, discutere un percorso su misura
+          o semplicemente capire da dove iniziare? Scrivici.
+        </p>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📧</div>
+          <div>
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-val">Scrivici tramite il form</div>
+            <div class="contact-info-sub">Compila il form — ti rispondiamo entro 24 ore</div>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📋</div>
+          <div>
+            <div class="contact-info-label">Punto di partenza</div>
+            <div class="contact-info-val">Bedrock Health Check</div>
+            <div class="contact-info-sub">Fai la diagnostica gratuita — il primo passo prima di qualsiasi formazione</div>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">🎓</div>
+          <div>
+            <div class="contact-info-label">Formazione</div>
+            <div class="contact-info-val">Bedrock IQ</div>
+            <div class="contact-info-sub">8 moduli operativi da €97 — acquisti solo quello che ti serve</div>
+          </div>
+        </div>
+
+        <div class="contact-note">
+          <div class="contact-note-text">
+            <strong>Non sei sicuro da dove iniziare?</strong><br>
+            Fai il Health Check gratuito — ti dirà esattamente quale area del tuo locale ha bisogno di più attenzione.
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form" id="contactForm">
+        <div id="formContent">
+          <div style="margin-bottom:24px;">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);margin-bottom:6px;">Scrivici</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;color:rgba(245,240,232,0.3);text-transform:uppercase;">Ti ricontatteremo entro 24 ore</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="nome">Nome *</label>
+              <input class="form-input" type="text" id="nome" placeholder="Marco" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cognome">Cognome *</label>
+              <input class="form-input" type="text" id="cognome" placeholder="Rossi" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="azienda">Nome del locale / Azienda</label>
+            <input class="form-input" type="text" id="azienda" placeholder="Es. Trattoria da Marco, Milano">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email *</label>
+            <input class="form-input" type="email" id="email" placeholder="marco@tuoristorante.it" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="interesse">Cosa ti interessa?</label>
+            <select class="form-select form-input" id="interesse">
+              <option value="" disabled selected>Seleziona un'opzione</option>
+              <option value="health-check">Informazioni sul Health Check</option>
+              <option value="modulo-singolo">Acquistare un modulo Bedrock IQ</option>
+              <option value="pacchetto-completo">Pacchetto completo o Pro</option>
+              <option value="consulenza">Consulenza personalizzata</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="messaggio">Messaggio</label>
+            <textarea class="form-textarea" id="messaggio" placeholder="Raccontaci brevemente il tuo locale e cosa stai cercando..."></textarea>
+          </div>
+
+          <button class="form-submit" onclick="submitForm(event)">
+            Invia il messaggio →
+          </button>
+
+          <div style="margin-top:14px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.15em;color:rgba(245,240,232,0.2);text-align:center;">
+            I tuoi dati non vengono condivisi con terze parti
+          </div>
+        </div>
+
+        <div class="form-success" id="formSuccess">
+          <div class="form-success-icon">✓</div>
+          <div class="form-success-title">Messaggio inviato!</div>
+          <div class="form-success-text">
+            Grazie per averci contattato.<br>
+            Ti risponderemo entro 24 ore all'indirizzo email che hai indicato.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+  FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Bedrock</div>
+      <span class="footer-brand-tag">Strong foundations. Real results.</span>
+      <p class="footer-brand-text">
+        Sistema di diagnostica e formazione operativa per ristoranti.
+        Costruito da chi conosce la cucina da dentro.
+      </p>
+    </div>
+    <div>
+      <div class="footer-col-title">Strumenti</div>
+      <ul class="footer-links">
+        <li><a href="https://bedrockhealth.netlify.app" target="_blank">Health Check</a></li>
+        <li><a href="#iq">Bedrock IQ</a></li>
+        <li><a href="#come-funziona">Come funziona</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Formazione</div>
+      <ul class="footer-links">
+        <li><a href="#iq">I moduli</a></li>
+        <li><a href="#iq">Pacchetti</a></li>
+        <li><a href="#iq">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contatti</div>
+      <ul class="footer-links">
+        <li><a href="#contatti">Scrivici</a></li>
+        <li><a href="#contatti">Form contatti</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 BEDROCK · STRONG FOUNDATIONS. REAL RESULTS.</div>
+    <div class="footer-copy">Tutti i diritti riservati</div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const ham  = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  const isOpen = menu.classList.contains('open');
+  ham.children[0].style.transform = isOpen ? 'rotate(45deg) translate(5px,5px)' : '';
+  ham.children[1].style.opacity   = isOpen ? '0' : '1';
+  ham.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(5px,-5px)' : '';
+  document.body.style.overflow    = isOpen ? 'hidden' : '';
+}
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu');
+  const ham  = document.getElementById('hamburger');
+  if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) {
+    toggleMenu();
+  }
+});
+
+async function submitForm(e) {
+  e.preventDefault();
+  const nome    = document.getElementById('nome').value.trim();
+  const cognome = document.getElementById('cognome').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  if (!nome || !cognome || !email) {
+    alert(document.documentElement.lang === 'it' ? 'Per favore compila i campi obbligatori: Nome, Cognome ed Email.' : 'Please fill in the required fields: First name, Last name and Email.');
+    return;
+  }
+  const btn = e.target;
+  btn.textContent = 'Invio in corso...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://formspree.io/f/xqeyjjeq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject:  'Bedrock Contatti — ' + nome + ' ' + cognome,
+        nome:      nome,
+        cognome:   cognome,
+        azienda:   document.getElementById('azienda').value,
+        email:     email,
+        interesse: document.getElementById('interesse').value,
+        messaggio: document.getElementById('messaggio').value
+      })
+    });
+    if (res.ok) {
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      btn.textContent = 'Invia il messaggio →';
+      btn.disabled = false;
+      alert("Errore nell'invio. Riprova o usa il form contatti.");
+    }
+  } catch (err) {
+    btn.textContent = 'Invia il messaggio →';
+    btn.disabled = false;
+    alert('Errore di rete. Controlla la connessione e riprova.');
+  }
+}
+
+// ── LANGUAGE SELECTOR ────────────────────────────────────────────────────────
+const langSelector = document.getElementById('langSelector');
+const langDropdown = document.getElementById('langDropdown');
+
+if (langSelector) {
+  langSelector.addEventListener('click', e => {
+    e.stopPropagation();
+    langDropdown.classList.toggle('open');
+  });
+  document.addEventListener('click', () => langDropdown.classList.remove('open'));
+}
+
+function setLang(langCode, label) {
+  // Update label
+  document.querySelector('.lang-label').textContent = label;
+  document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
+  event.target.classList.add('active');
+  langDropdown.classList.remove('open');
+
+  // Trigger Google Translate
+  const select = document.querySelector('.goog-te-combo');
+  if (select) {
+    select.value = langCode;
+    select.dispatchEvent(new Event('change'));
+  }
+}
+
+// ── AUTO-DETECT BROWSER LANGUAGE ─────────────────────────────────────────────
+(function autoDetectLang() {
+  const userLang = (navigator.language || navigator.userLanguage || 'it').split('-')[0].toLowerCase();
+  const supported = { en: 'EN', es: 'ES', fr: 'FR', de: 'DE' };
+  if (userLang !== 'it' && supported[userLang]) {
+    // Wait for Google Translate to load, then switch
+    let attempts = 0;
+    const trySwitch = setInterval(() => {
+      const select = document.querySelector('.goog-te-combo');
+      if (select || attempts > 20) {
+        clearInterval(trySwitch);
+        if (select) {
+          select.value = userLang;
+          select.dispatchEvent(new Event('change'));
+          const label = document.querySelector('.lang-label');
+          if (label) label.textContent = supported[userLang];
+          // Mark active option
+          document.querySelectorAll('.lang-option').forEach(el => {
+            el.classList.toggle('active', el.textContent.toLowerCase().includes(userLang));
+          });
+        }
+      }
+      attempts++;
+    }, 300);
+  }
+})();
+
+</script>
+</body>
+</html>

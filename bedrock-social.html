@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestione Social — Bedrock IQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0f0e0c; --cream:#f5f0e8; --warm:#ede5d4; --paper:#faf7f2;
+  --gold:#c8a96e; --border:#d4c9b0; --muted:#8a7d6a; --amber:#c8703a;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);font-family:'DM Sans',sans-serif;color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(15,14,12,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,169,110,0.12);padding:16px 40px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{display:flex;flex-direction:column;gap:3px;text-decoration:none;}
+.nav-brand-logo{display:flex;align-items:baseline;gap:6px;}
+.nav-brand-name{font-family:'Playfair Display',serif;font-weight:900;font-size:22px;color:var(--cream);line-height:1;letter-spacing:-0.01em;}
+.nav-brand-iq{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--gold);letter-spacing:0.05em;padding:2px 7px;border:1.5px solid rgba(200,169,110,0.4);border-radius:4px;line-height:1.4;}
+.nav-brand-tag{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:0.32em;text-transform:uppercase;color:rgba(200,169,110,0.45);}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.45);transition:color 0.2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{padding:10px 22px;background:var(--gold);border-radius:4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink);font-weight:500;transition:opacity 0.15s;}
+.nav-cta:hover{opacity:0.85;}
+
+/* LAYOUT */
+.wrap{max-width:1100px;margin:0 auto;padding:0 clamp(20px,5vw,40px);}
+.section-pad{padding:clamp(64px,10vw,110px) 0;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold);flex-shrink:0;}
+
+/* BUTTONS */
+.btn-gold{display:inline-flex;align-items:center;gap:8px;padding:15px 32px;background:var(--gold);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink);font-weight:500;transition:opacity 0.15s;cursor:pointer;border:none;}
+.btn-gold:hover{opacity:0.85;}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;padding:15px 32px;border:1.5px solid rgba(200,169,110,0.3);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,240,232,0.55);transition:all 0.2s;cursor:pointer;background:transparent;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--ink);display:flex;align-items:center;padding:120px 40px 80px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(200,169,110,0.055) 0%,transparent 68%);pointer-events:none;}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;}
+.hero-left{animation:fadeUp 0.65s ease both;}
+.hero-right{animation:fadeUp 0.65s 0.18s ease both;}
+.hero-module-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.2);border-radius:20px;padding:6px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.hero-h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(42px,5.5vw,72px);line-height:1.05;color:var(--cream);margin-bottom:22px;}
+.hero-h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:clamp(14px,1.8vw,16px);line-height:1.75;color:rgba(245,240,232,0.5);max-width:520px;margin-bottom:44px;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;}
+.hero-overview{background:rgba(200,169,110,0.06);border:1px solid rgba(200,169,110,0.14);border-radius:14px;padding:36px 32px;}
+.hero-overview-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-bottom:24px;}
+.overview-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;}
+.overview-stat{background:rgba(15,14,12,0.5);border:1px solid rgba(200,169,110,0.1);border-radius:8px;padding:16px;}
+.overview-stat-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px;}
+.overview-stat-label{font-size:12px;color:rgba(245,240,232,0.4);line-height:1.4;}
+.overview-stat-label strong{display:block;color:var(--cream);font-size:13px;margin-bottom:2px;}
+.overview-includes{border-top:1px solid rgba(200,169,110,0.1);padding-top:20px;}
+.overview-includes-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,240,232,0.25);margin-bottom:12px;}
+.overview-includes-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.overview-includes-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(245,240,232,0.55);line-height:1.4;}
+.overview-includes-list li::before{content:'✓';color:var(--gold);font-size:11px;flex-shrink:0;}
+
+/* BRAND STRIP */
+.brand-strip{background:var(--gold);padding:18px clamp(20px,5vw,40px);display:flex;align-items:center;justify-content:center;gap:clamp(20px,5vw,60px);flex-wrap:wrap;}
+.strip-item{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(15,14,12,0.55);white-space:nowrap;display:flex;align-items:center;gap:10px;}
+.strip-dot{width:4px;height:4px;border-radius:50%;background:rgba(15,14,12,0.25);flex-shrink:0;}
+
+/* PROBLEMA */
+.problem-section{background:var(--ink);}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;}
+.problem-statements{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
+.problem-item{display:flex;gap:14px;align-items:flex-start;background:rgba(200,169,110,0.03);border:1px solid rgba(200,169,110,0.08);border-radius:8px;padding:18px 20px;transition:border-color 0.2s;}
+.problem-item:hover{border-color:rgba(200,169,110,0.2);}
+.problem-x{font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);flex-shrink:0;margin-top:2px;font-weight:500;}
+.problem-text{font-size:14px;color:rgba(245,240,232,0.55);line-height:1.6;}
+.problem-contrast{background:rgba(200,169,110,0.07);border:1px solid rgba(200,169,110,0.16);border-radius:14px;padding:36px;}
+.problem-contrast-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.problem-contrast-quote{font-family:'Playfair Display',serif;font-size:21px;font-style:italic;color:var(--cream);line-height:1.45;margin-bottom:24px;}
+.problem-contrast-points{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.problem-contrast-points li{display:flex;gap:12px;font-size:14px;color:rgba(245,240,232,0.55);line-height:1.55;}
+.problem-contrast-points li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:2px;}
+
+/* ACCORDION */
+.modules-section{background:var(--cream);}
+.modules-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:20px;}
+.modules-intro-right{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.modules-intro-right::before{content:'';display:block;width:20px;height:1px;background:var(--border);}
+.accordion-list{display:flex;flex-direction:column;gap:8px;}
+.accordion-item{background:white;border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.25s,box-shadow 0.25s;}
+.accordion-item:hover{border-color:var(--gold);}
+.accordion-item.open{border-color:var(--gold);box-shadow:0 4px 24px rgba(200,169,110,0.12);}
+.accordion-trigger{width:100%;background:none;border:none;display:flex;align-items:center;padding:0;cursor:pointer;text-align:left;}
+.accordion-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--gold);flex-shrink:0;width:60px;padding:24px 0 24px 24px;}
+.accordion-icon-wrap{width:44px;height:44px;border-radius:8px;background:rgba(200,169,110,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;margin-right:16px;transition:background 0.2s;}
+.accordion-item.open .accordion-icon-wrap{background:rgba(200,169,110,0.2);}
+.accordion-header-text{flex:1;padding:20px 0;}
+.accordion-title{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:var(--ink);line-height:1.2;margin-bottom:4px;}
+.accordion-subtitle{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.accordion-meta{display:flex;align-items:center;gap:12px;padding:20px 24px;flex-shrink:0;}
+.accordion-badge{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.15em;padding:4px 10px;border-radius:20px;background:rgba(200,169,110,0.1);color:var(--gold);white-space:nowrap;}
+.accordion-chevron{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;flex-shrink:0;transition:all 0.3s;}
+.accordion-item.open .accordion-chevron{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg);}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
+.accordion-item.open .accordion-body{max-height:4000px;}
+.accordion-content{padding:0 28px 36px;border-top:1px solid var(--border);margin:0 24px;}
+
+/* Grid interno accordion */
+.acc-grid{display:grid;grid-template-columns:1fr 360px;gap:40px;padding-top:32px;}
+.acc-section{margin-bottom:32px;}
+.acc-section:last-child{margin-bottom:0;}
+.acc-section-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.acc-section-label::after{content:'';flex:1;height:1px;background:rgba(212,201,176,0.5);}
+.topics-list{list-style:none;display:flex;flex-direction:column;}
+.topic-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid rgba(212,201,176,0.45);}
+.topic-item:last-child{border-bottom:none;}
+.topic-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.topic-dot span{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:0.6;}
+.topic-body{flex:1;}
+.topic-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:5px;line-height:1.3;}
+.topic-desc{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* Sidebar accordion */
+.acc-sidebar{display:flex;flex-direction:column;gap:14px;}
+.sidebar-card{background:var(--ink);border-radius:10px;padding:22px;}
+.sidebar-card-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.sidebar-card-text{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:rgba(245,240,232,0.7);line-height:1.55;}
+.sidebar-materials{background:var(--ink);border-radius:10px;padding:22px;}
+.sidebar-materials-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(200,169,110,0.5);margin-bottom:12px;}
+.material-item{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:rgba(245,240,232,0.45);padding:7px 0;border-bottom:1px solid rgba(200,169,110,0.07);line-height:1.45;}
+.material-item:last-child{border-bottom:none;}
+.material-item::before{content:'↓';color:var(--gold);font-size:11px;flex-shrink:0;margin-top:1px;}
+.sidebar-tools{background:rgba(200,169,110,0.07);border:1px solid rgba(200,169,110,0.15);border-radius:10px;padding:22px;}
+.sidebar-tools-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.tool-item{display:flex;align-items:flex-start;gap:12px;padding:9px 0;border-bottom:1px solid rgba(200,169,110,0.1);}
+.tool-item:last-child{border-bottom:none;}
+.tool-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.tool-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.tool-desc{font-size:12px;color:var(--muted);line-height:1.45;}
+.sidebar-who{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+.sidebar-who-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.sidebar-who-text{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* APPROCCIO */
+.approach-section{background:var(--ink);}
+.approach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px;}
+.approach-card{background:rgba(200,169,110,0.04);border:1px solid rgba(200,169,110,0.1);border-radius:12px;padding:32px 28px;transition:border-color 0.2s,background 0.2s;position:relative;overflow:hidden;}
+.approach-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+.approach-card:hover{border-color:rgba(200,169,110,0.28);background:rgba(200,169,110,0.07);}
+.approach-card:hover::before{opacity:1;}
+.approach-num{font-family:'Playfair Display',serif;font-weight:900;font-size:60px;color:rgba(200,169,110,0.08);line-height:1;margin-bottom:14px;}
+.approach-icon{font-size:26px;margin-bottom:14px;display:block;}
+.approach-title{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;color:var(--cream);margin-bottom:10px;line-height:1.2;}
+.approach-text{font-size:14px;color:rgba(245,240,232,0.45);line-height:1.7;}
+
+/* A CHI SERVE */
+.who-section{background:var(--warm);}
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:start;}
+.persona-cards{display:flex;flex-direction:column;gap:12px;margin-top:8px;}
+.persona-card{background:var(--ink);border-radius:10px;padding:22px;border:1px solid rgba(200,169,110,0.1);transition:border-color 0.2s;}
+.persona-card:hover{border-color:rgba(200,169,110,0.28);}
+.persona-role{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.persona-name{font-size:15px;font-weight:600;color:var(--cream);margin-bottom:8px;}
+.persona-text{font-size:13px;color:rgba(245,240,232,0.45);line-height:1.6;}
+.deliverables-list{list-style:none;display:flex;flex-direction:column;margin-top:16px;}
+.deliverable-item{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid rgba(212,201,176,0.6);}
+.deliverable-item:last-child{border-bottom:none;}
+.deliverable-icon{width:36px;height:36px;background:var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.deliverable-name{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.deliverable-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* CTA */
+.cta-section{background:var(--ink);}
+.cta-card{background:var(--gold);border-radius:16px;padding:clamp(36px,5vw,60px);max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;}
+.cta-tag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.35em;text-transform:uppercase;color:rgba(15,14,12,0.5);margin-bottom:10px;}
+.cta-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,3.5vw,34px);color:var(--ink);line-height:1.1;margin-bottom:12px;}
+.cta-sub{font-size:14px;line-height:1.65;color:rgba(15,14,12,0.6);max-width:420px;}
+.cta-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+.cta-badge{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;padding:5px 12px;border-radius:20px;background:rgba(15,14,12,0.12);color:rgba(15,14,12,0.6);}
+.cta-price-block{text-align:center;flex-shrink:0;}
+.cta-price{font-family:'Playfair Display',serif;font-weight:900;font-size:64px;color:var(--ink);line-height:1;}
+.cta-price span{font-family:'DM Mono',monospace;font-size:14px;font-weight:400;vertical-align:super;}
+.cta-price-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(15,14,12,0.5);margin-top:4px;margin-bottom:20px;}
+.btn-dark-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--ink);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);transition:opacity 0.15s;font-weight:500;width:100%;justify-content:center;}
+.btn-dark-cta:hover{opacity:0.85;}
+.cta-note{text-align:center;margin-top:24px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;color:rgba(245,240,232,0.2);}
+
+/* FOOTER */
+footer{background:var(--ink);border-top:1px solid rgba(200,169,110,0.08);padding:clamp(48px,7vw,72px) clamp(20px,5vw,40px) 40px;}
+.footer-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:clamp(28px,5vw,48px);margin-bottom:48px;}
+.footer-brand-name{font-family:'Playfair Display',serif;font-weight:900;font-size:22px;color:var(--cream);margin-bottom:4px;}
+.footer-brand-tag{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;}
+.footer-brand-text{font-size:12px;line-height:1.7;color:rgba(245,240,232,0.28);max-width:240px;}
+.footer-col-title{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.footer-links a{font-size:12px;color:rgba(245,240,232,0.35);transition:color 0.2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-bottom{max-width:1100px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(200,169,110,0.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-copy{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.18em;color:rgba(245,240,232,0.18);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.acc-grid{grid-template-columns:1fr;}.acc-sidebar{display:grid;grid-template-columns:1fr 1fr;gap:14px;}}
+@media(max-width:900px){nav{padding:14px 20px;}.nav-links{display:none;}.hero{padding:100px 20px 60px;}.hero-grid{grid-template-columns:1fr;}.hero-right{display:none;}.problem-grid{grid-template-columns:1fr;}.approach-grid{grid-template-columns:1fr;}.who-grid{grid-template-columns:1fr;}.cta-card{grid-template-columns:1fr;gap:32px;}.footer-grid{grid-template-columns:1fr 1fr;}.acc-sidebar{grid-template-columns:1fr;}}
+@media(max-width:540px){.footer-grid{grid-template-columns:1fr;}.hero-actions{flex-direction:column;}.hero-actions .btn-gold,.hero-actions .btn-outline{width:100%;justify-content:center;}.accordion-badge{display:none;}.acc-sidebar{grid-template-columns:1fr;}}
+
+/* ── SOCIAL GRID RISTRUTTURATA ─────────────────────────────── */
+.who-section{ background: var(--ink); }
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:start;}
+
+/* Persona cards redesign */
+.persona-cards{display:flex;flex-direction:column;gap:10px;margin-top:8px;}
+.persona-card{
+  background:rgba(200,169,110,0.04);
+  border:1px solid rgba(200,169,110,0.1);
+  border-radius:10px;padding:22px 24px;
+  transition:border-color 0.2s, background 0.2s;
+  position:relative;overflow:hidden;
+}
+.persona-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.persona-card:hover{border-color:rgba(200,169,110,0.28);background:rgba(200,169,110,0.07);}
+.persona-card:hover::before{opacity:1;}
+.persona-role{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.28em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;
+}
+.persona-role::before{content:'';display:block;width:16px;height:1px;background:var(--gold);opacity:0.5;}
+.persona-name{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:6px;line-height:1.3;}
+.persona-text{font-size:12px;color:rgba(245,240,232,0.4);line-height:1.65;}
+
+/* Deliverables redesign */
+.who-right-head{margin-bottom:32px;}
+.deliverables-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.deliverable-item{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:16px 0;
+  border-bottom:1px solid rgba(200,169,110,0.08);
+  transition:background 0.15s;
+}
+.deliverable-item:last-child{border-bottom:none;}
+.deliverable-icon{
+  width:38px;height:38px;
+  background:rgba(200,169,110,0.07);
+  border:1px solid rgba(200,169,110,0.12);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+  transition:background 0.2s;
+}
+.deliverable-item:hover .deliverable-icon{background:rgba(200,169,110,0.15);}
+.deliverable-name{font-size:13px;font-weight:600;color:var(--cream);margin-bottom:3px;line-height:1.3;}
+.deliverable-desc{font-size:12px;color:rgba(245,240,232,0.35);line-height:1.55;}
+
+@media(max-width:900px){.who-grid{grid-template-columns:1fr;}}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://bedrock-de2.pages.dev/" class="nav-brand">
+    <div class="nav-brand-logo">
+      <div class="nav-brand-name">Bedrock</div>
+      <div class="nav-brand-iq">IQ</div>
+    </div>
+    <div class="nav-brand-tag">Strong foundations. Real results.</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#guide">Le guide</a></li>
+    <li><a href="#approccio">L'approccio</a></li>
+    <li><a href="#chi-serve">A chi serve</a></li>
+    <li><a href="https://bedrock-de2.pages.dev/">← Bedrock IQ</a></li>
+  </ul>
+  <a href="#acquista" class="nav-cta">Acquista il modulo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap" style="width:100%;">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-module-tag">Modulo Extra · Bedrock IQ</div>
+        <div class="eyebrow" style="margin-bottom:16px;">Social Media per Ristoranti</div>
+        <h1 class="hero-h1">Presenti.<br>Riconoscibili.<br><em>Rilevanti.</em></h1>
+        <p class="hero-sub">Non un corso video. Un kit formativo operativo: guide PDF, template compilabili e istruzioni pratiche per gestire i social con metodo — raccontando il tuo prodotto vero senza perdere ore ogni giorno.</p>
+        <div class="hero-actions">
+          <a href="#guide" class="btn-gold">Scopri le guide →</a>
+          <a href="#acquista" class="btn-outline">€127 — Acquista</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-overview">
+          <div class="hero-overview-title">Panoramica del kit formativo</div>
+          <div class="overview-stat-row">
+            <div class="overview-stat"><div class="overview-stat-num">4</div><div class="overview-stat-label"><strong>Guide PDF</strong>Strategia, Contenuti, Calendario, Piattaforme</div></div>
+            <div class="overview-stat"><div class="overview-stat-num">6</div><div class="overview-stat-label"><strong>Template operativi</strong>Pronti da compilare e usare subito</div></div>
+            <div class="overview-stat"><div class="overview-stat-num">3</div><div class="overview-stat-label"><strong>Guide app</strong>Instagram, Meta Suite, Google Business</div></div>
+            <div class="overview-stat"><div class="overview-stat-num">∞</div><div class="overview-stat-label"><strong>Accesso</strong>Illimitato, aggiornamenti inclusi</div></div>
+          </div>
+          <div class="overview-includes">
+            <div class="overview-includes-label">Cosa include</div>
+            <ul class="overview-includes-list">
+              <li>Guida strategia editoriale con esercizi guidati</li>
+              <li>Manuale contenuti: i 6 formati + guida foto smartphone</li>
+              <li>Template calendario mensile + sistema pianificazione</li>
+              <li>Guide illustrate: Instagram, Meta Suite, Google Business</li>
+              <li>10 strutture caption pronte da adattare</li>
+              <li>Protocollo gestione recensioni — 3 template di risposta</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND STRIP -->
+<div class="brand-strip">
+  <div class="strip-item"><span class="strip-dot"></span>Strategia editoriale</div>
+  <div class="strip-item"><span class="strip-dot"></span>Contenuti di prodotto</div>
+  <div class="strip-item"><span class="strip-dot"></span>Calendario operativo</div>
+  <div class="strip-item"><span class="strip-dot"></span>Instagram &amp; Facebook</div>
+  <div class="strip-item"><span class="strip-dot"></span>Google Business</div>
+  <div class="strip-item"><span class="strip-dot"></span>Strumenti gratuiti</div>
+</div>
+
+<!-- PROBLEMA -->
+<section class="problem-section section-pad">
+  <div class="wrap">
+    <div class="problem-grid">
+      <div>
+        <div class="eyebrow">Il problema</div>
+        <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(28px,4vw,44px);line-height:1.1;color:var(--cream);margin-bottom:16px;">La maggior parte dei ristoranti fa social <em style="font-style:italic;color:var(--gold);">nel modo sbagliato</em></h2>
+        <p style="font-size:15px;line-height:1.75;color:rgba(245,240,232,0.45);max-width:480px;margin-bottom:28px;">Postano quando ricordano, usano trend che non c'entrano nulla con loro, fanno foto al piatto senza mai spiegare chi sono. Risultato: follower che non diventano mai clienti.</p>
+        <div class="problem-statements">
+          <div class="problem-item"><div class="problem-x">✕</div><div class="problem-text"><strong style="color:rgba(245,240,232,0.75);">Postare senza messaggio.</strong> Il cliente vede un piatto bello, ma non capisce perché dovrebbe venire da te. Nessun motivo per seguirti, nessun motivo per prenotare.</div></div>
+          <div class="problem-item"><div class="problem-x">✕</div><div class="problem-text"><strong style="color:rgba(245,240,232,0.75);">Inseguire i trend.</strong> Audio virali, challenge, format copiati da altri settori. Si vede subito. Funziona per qualche like, poi scompare — e nel frattempo hai comunicato che non sai chi sei.</div></div>
+          <div class="problem-item"><div class="problem-x">✕</div><div class="problem-text"><strong style="color:rgba(245,240,232,0.75);">Sparire per settimane.</strong> L'algoritmo penalizza l'incoerenza. Poi si cerca di recuperare postando ogni giorno — e si torna nel caos senza risultati.</div></div>
+          <div class="problem-item"><div class="problem-x">✕</div><div class="problem-text"><strong style="color:rgba(245,240,232,0.75);">Ignorare Google Business.</strong> È il primo posto dove il cliente ti cerca. Se è vuoto o senza risposte alle recensioni, stai perdendo prenotazioni ogni giorno — senza saperlo.</div></div>
+        </div>
+      </div>
+      <div class="problem-contrast">
+        <div class="problem-contrast-label">Il principio Bedrock</div>
+        <div class="problem-contrast-quote">"I social non sono una vetrina di tendenze. Sono il prolungamento della tua sala — dove il cliente ti conosce prima ancora di entrare."</div>
+        <ul class="problem-contrast-points">
+          <li>Prima stabiliamo chi sei e cosa comunichi. Poi costruiamo i contenuti di conseguenza — non il contrario.</li>
+          <li>I contenuti che funzionano per un ristorante raccontano il lavoro, gli ingredienti, le persone e la storia dietro ogni piatto.</li>
+          <li>Un sistema in 90 minuti a settimana vale più di dieci post improvvisati. La coerenza batte sempre la frequenza.</li>
+          <li>Gli strumenti giusti — molti dei quali gratuiti — eliminano il caos e rendono i social una routine prevedibile.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDE ACCORDION -->
+<section id="guide" class="modules-section section-pad">
+  <div class="wrap">
+    <div class="modules-intro">
+      <div>
+        <div class="eyebrow">Il kit formativo</div>
+        <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(28px,4vw,44px);line-height:1.1;color:var(--ink);">4 guide operative.<br>Un sistema completo.</h2>
+      </div>
+      <div class="modules-intro-right">Clicca per espandere ogni guida</div>
+    </div>
+
+    <div class="accordion-list">
+
+      <!-- GUIDA 1 -->
+      <div class="accordion-item" data-index="0">
+        <button class="accordion-trigger" onclick="toggleAccordion(0)">
+          <div class="accordion-num">01</div>
+          <div class="accordion-icon-wrap">🎯</div>
+          <div class="accordion-header-text">
+            <div class="accordion-title">Strategia &amp; Identità Editoriale</div>
+            <div class="accordion-subtitle">Chi sei, a chi parli, cosa dici — prima di toccare lo schermo</div>
+          </div>
+          <div class="accordion-meta">
+            <div class="accordion-badge">Guida PDF · 22 pag.</div>
+            <div class="accordion-chevron">▾</div>
+          </div>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="acc-grid">
+              <div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Il messaggio del locale</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Le 3 domande fondamentali</div>
+                        <div class="topic-desc">Chi sei (non "ristorante italiano" — troppo generico). A chi parli (non "a tutti" — non esiste). Cosa vuoi che facciano dopo aver visto il tuo profilo. Fino a quando non hai risposto a queste tre domande in modo preciso, qualsiasi contenuto è improvvisazione.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Esercizio guidato: scrivi la tua frase di posizionamento</div>
+                        <div class="topic-desc">Una frase sola, onesta e non pubblicitaria, che descrive cosa sei. Esempio: "Cuciniamo quello che arriva dal mercato ogni mattina, senza menu fisso." Chi la legge capisce subito se fa per lui. L'obiettivo non è piacere a tutti: è essere chiari con quelli giusti.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Definire il cliente ideale — in modo concreto</div>
+                        <div class="topic-desc">Non un'analisi demografica astratta. Pensa al tuo cliente migliore — quello che torna, porta gli amici, apprezza quello che fai. Descrivi lui quando scrivi ogni didascalia. È molto più potente di qualsiasi targeting pubblicitario.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Il profilo che lavora per te</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Bio Instagram: i 150 caratteri che contano davvero</div>
+                        <div class="topic-desc">Non il menu, non gli orari, non "since 2010". La bio deve rispondere a: cosa sei, perché venire da te, cosa fare adesso. Checklist compilabile per ogni elemento — nome, categoria, descrizione, link, emoji (quando usarle e quando evitarle).</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Il link in bio: non sprecare quello spazio</div>
+                        <div class="topic-desc">Un solo link, ma usato bene. Esistono strumenti gratuiti (app che aggregano più link in una pagina accessibile da mobile) per raccogliere prenotazione, menu, contatti e mappa in un posto solo. La guida spiega come configurarlo in 20 minuti senza conoscenze tecniche.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Foto profilo, nome utente e copertine Highlights</div>
+                        <div class="topic-desc">La foto profilo deve essere leggibile a 40px. Il nome utente: semplice, senza trattini e numeri. Gli Highlights: massimo 5, coerenti. Guida con esempi visivi di cosa funziona e cosa no — con spiegazione del perché.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Tono di voce e stile visivo</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">I 5 profili di tono — trovare il tuo</div>
+                        <div class="topic-desc">Formale-elegante, caldo-familiare, diretto-informale, tecnico-appassionato, narrativo-poetico. Per ognuno: un esempio di caption sullo stesso piatto scritto nei 5 stili diversi. Scegli quello più vicino a come parleresti ai tuoi clienti in sala — e mantienilo costante nel tempo.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Coerenza visiva senza un grafico</div>
+                        <div class="topic-desc">Bastano: 2-3 colori dominanti coerenti con l'ambiente del locale, un filtro leggero applicato sempre uguale, uno stile fotografico riconoscibile (caldo/freddo, ravvicinato/panoramico). Quando qualcuno vede una tua foto nel feed senza leggere il nome, deve riconoscerti.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Griglia analisi concorrenza locale</div>
+                        <div class="topic-desc">Scheda da compilare guardando 3-5 profili concorrenti nella tua zona: cosa postano, frequenza, format usati, interazione generata, cosa manca. Non per copiare — per trovare il vuoto comunicativo che nessuno sta occupando. Quello è il tuo vantaggio competitivo.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="acc-sidebar">
+                <div class="sidebar-card">
+                  <div class="sidebar-card-label">Risultato concreto</div>
+                  <div class="sidebar-card-text">Compili la Scheda Identità Editoriale e hai nero su bianco chi sei, a chi parli, che tono usi e come si riconosce il tuo stile. La base di ogni post da quel momento in poi.</div>
+                </div>
+                <div class="sidebar-materials">
+                  <div class="sidebar-materials-label">Materiali inclusi</div>
+                  <div class="material-item">Guida PDF "Strategia Editoriale" (22 pag.)</div>
+                  <div class="material-item">Template "Scheda Identità Editoriale" compilabile</div>
+                  <div class="material-item">Checklist ottimizzazione profilo Instagram</div>
+                  <div class="material-item">Griglia analisi concorrenza (A4 da stampare)</div>
+                  <div class="material-item">5 esempi caption per 5 toni di voce diversi</div>
+                </div>
+                <div class="sidebar-who">
+                  <div class="sidebar-who-label">A chi serve</div>
+                  <div class="sidebar-who-text">Chi non ha una presenza strutturata. Chi è già attivo ma senza una direzione chiara. Chi si ritrova a postare cose diverse ogni giorno senza filo conduttore. <strong>Va letta prima di tutto il resto.</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUIDA 2 -->
+      <div class="accordion-item" data-index="1">
+        <button class="accordion-trigger" onclick="toggleAccordion(1)">
+          <div class="accordion-num">02</div>
+          <div class="accordion-icon-wrap">📸</div>
+          <div class="accordion-header-text">
+            <div class="accordion-title">I Contenuti che Fanno Capire il Prodotto</div>
+            <div class="accordion-subtitle">I 6 formati che funzionano — e come realizzarli senza staff dedicato</div>
+          </div>
+          <div class="accordion-meta">
+            <div class="accordion-badge">Manuale PDF · 38 pag.</div>
+            <div class="accordion-chevron">▾</div>
+          </div>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="acc-grid">
+              <div>
+                <div class="acc-section">
+                  <div class="acc-section-label">I 6 formati di contenuto per ristoranti</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">01 — Il dietro le quinte</div>
+                        <div class="topic-desc">Il brodo che sobbolle dalle 7, la pasta tirata a mano, il forno che si scalda. Mostra il lavoro che il cliente non vede ma sente nel piatto. È il formato con il tasso di salvataggio più alto su Instagram — perché le persone vogliono capire cosa c'è dietro. Come girarlo: 15-30 secondi, luce naturale, nessuna musica sovrastante. Puoi parlare tu o lasciare i suoni della cucina. Entrambi funzionano se sono autentici.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">02 — L'ingrediente protagonista</div>
+                        <div class="topic-desc">Non il piatto finito: l'ingrediente che lo fa. Il fornitore di fiducia, il mercato del mattino, il produttore locale che conosci per nome. Una storia in 3 righe su quel formaggio, quel vino, quell'olio. Le persone non comprano ingredienti: comprano storie e intenzioni. Struttura: chi è, da dove viene, perché lo usi tu. Evita i superlativi generici ("il migliore") — un dettaglio specifico comunica più di qualsiasi superlativo.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">03 — Il piatto con il suo perché</div>
+                        <div class="topic-desc">Non la foto e basta — quello è un catalogo. Il piatto più il contesto: perché è in menu, da dove viene l'idea, cosa lo rende diverso. Un ricordo di famiglia, una stagione, una ricerca. Il contesto trasforma il cibo in cultura. Struttura caption: gancio (la storia in una frase), corpo (il dettaglio unico), chiusura (invito morbido — non "prenota ora" come primo pensiero, ma "ti aspettiamo da martedì").</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">04 — L'atmosfera reale</div>
+                        <div class="topic-desc">La sala piena il mercoledì sera, la luce del tramonto sul dehors, il rumore delle posate durante il servizio. Non lo shooting perfetto — la bellezza reale di ogni giorno. Questo tipo di contenuto abbassa la soglia d'ingresso: il cliente "ci è già stato" prima di arrivarci. Come farlo: scatta durante il servizio, non prima. Le persone vere che mangiano comunicano più di un tavolo vuoto e preparato per la foto.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">05 — Le persone del locale</div>
+                        <div class="topic-desc">Tu, il sous chef, il sommelier, il ragazzo di sala che sa ogni nome del menu a memoria. Umanizzare il ristorante è la forma di marketing più potente che esiste — e la meno sfruttata. I clienti tornano dalle persone, non dai piatti. Come farlo senza disagio: non serve una carrellata di curriculum. Una cosa che quella persona fa meglio di tutti, una frase in cui si riconosce. Basta quello per creare connessione.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">06 — Le novità di stagione</div>
+                        <div class="topic-desc">Il menu è cambiato? È arrivato il tartufo? Inizia la stagione dei carciofi, dei funghi, del pesce bianco? Documenta il cambiamento — dimostra che sei vivo e fedele alla stagionalità. È anche il contenuto più condiviso: le persone taggano gli amici nelle novità di locali che già conoscono. Come pianificarlo: costruisci un calendario stagionale annuale (tartufo bianco: ott-nov, asparagi: apr-mag, ecc.) e hai già una colonna portante dei contenuti per 12 mesi.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">La foto che vende — senza uno studio</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Luce naturale: come sfruttarla e quando</div>
+                        <div class="topic-desc">La luce naturale laterale è la migliore per il cibo. Posiziona il piatto vicino a una finestra con la luce che arriva di lato — mai controluce, mai flash diretto. Orario migliore: prima del servizio, quando la cucina è pulita e la luce è calda. Il "golden hour" fotografico esiste anche in cucina.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Le 3 angolazioni che funzionano sempre</div>
+                        <div class="topic-desc">Dall'alto (flat lay) per piatti con composizione interessante, dessert, tavola apparecchiata. A 45° per piatti con altezza (burger, torte, zuppe). Frontale ravvicinato per i dettagli di texture — crosta del pane, glassa, sfoglia. La guida mostra con foto side by side lo stesso piatto in 3 angolazioni: l'effetto è completamente diverso.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Editing minimo: app gratuite per smartphone</div>
+                        <div class="topic-desc">Non serve Photoshop. Esistono app gratuite (disponibili su iOS e Android) che regolano esposizione, contrasto, saturazione e nitidezza in meno di 2 minuti. Il segreto è creare una "ricetta" di regolazioni e applicarla uguale a tutte le foto — così il feed rimane coerente senza ore di editing. Parametri consigliati per foto di cibo: inclusi nella guida.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">La caption che converte</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">La struttura in 3 parti</div>
+                        <div class="topic-desc"><strong>Gancio</strong> (prima riga — l'unica visibile prima del "leggi di più"): deve fermare lo scroll. Non iniziare con il nome del piatto. Inizia con una domanda, un dettaglio sorprendente, un'affermazione forte. <strong>Corpo</strong>: la storia, il contesto, il perché. Max 3-4 righe. Ogni frase deve guadagnarsi il diritto di stare lì. <strong>Chiusura</strong>: un'azione morbida, non aggressiva.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">10 strutture caption pronte — esempi reali</div>
+                        <div class="topic-desc">10 formule testate: la storia dell'ingrediente, il dietro le quinte in 3 righe, la domanda al follower, il "lo sapevi che…", il racconto del fornitore, la stagione che inizia, il piatto e il ricordo, il momento della settimana, la novità, il ringraziamento. Per ognuna: la struttura e un esempio compilato da adattare cambiando solo i dettagli del tuo locale.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Hashtag: quanti, quali, come — senza sembrare spam</div>
+                        <div class="topic-desc">Non 30 hashtag a caso. 5-10 mirati: 2 di nicchia specifica (es. #ristoranteromano), 3-4 di categoria (es. #pastafattaamano), 2-3 geografici. Meglio nel primo commento che nella caption — la caption rimane pulita. Nella guida: lista di 50 hashtag efficaci per la ristorazione italiana, divisi per categoria.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Stories e Reels — quando usarli davvero</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Stories: il canale dei clienti abituali</div>
+                        <div class="topic-desc">Le Stories le vede chi ti segue già — non attirano nuovi follower ma mantengono la relazione con chi già ti conosce. Usale per aggiornamenti quotidiani (oggi cuciniamo X, siamo aperti/chiusi, è arrivato il pesce), sondaggi rapidi, dietro le quinte veloci. Non sparire dalle Stories anche nei giorni in cui non posti nel feed — sono canali diversi con funzioni diverse.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Reels: quando vale davvero la pena farli</div>
+                        <div class="topic-desc">I Reels raggiungono chi non ti segue: sono lo strumento principale per crescere. Ma non ogni locale deve farli ogni giorno. Vale la pena investirci se hai qualcosa di visivamente forte: una lavorazione particolare, un piatto scenografico, un ambiente interessante. Non vale la pena se stai mettendo foto statiche su musica di tendenza. 1-2 Reels curati a settimana battono 7 Reels mediocri.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Schema Reel in cucina — 4 inquadrature, nessun montaggio</div>
+                        <div class="topic-desc">Mani che lavorano (10 sec) → ingrediente ravvicinato (5 sec) → piatto che si compone (10 sec) → risultato finale (5 sec). Con un treppiede da 15€ e il tuo smartphone hai già tutto. Esistono app gratuite per tagliare e unire clip direttamente dal telefono in pochi minuti — senza conoscere il montaggio video.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="acc-sidebar">
+                <div class="sidebar-card">
+                  <div class="sidebar-card-label">Risultato concreto</div>
+                  <div class="sidebar-card-text">Non dovrai mai più chiederti "cosa posto oggi". Hai 6 formati mappati, 10 strutture caption pronte e una guida foto da appendere in cucina.</div>
+                </div>
+                <div class="sidebar-materials">
+                  <div class="sidebar-materials-label">Materiali inclusi</div>
+                  <div class="material-item">Manuale PDF "Contenuti per Ristoranti" (38 pag. illustrate)</div>
+                  <div class="material-item">Scheda "I 6 formati" da appendere — formato A4</div>
+                  <div class="material-item">Guida foto smartphone — con esempi before/after</div>
+                  <div class="material-item">Foglio "10 strutture caption" compilabili</div>
+                  <div class="material-item">Lista 50 hashtag per la ristorazione italiana</div>
+                  <div class="material-item">Schema Reel in 4 inquadrature (PDF)</div>
+                </div>
+                <div class="sidebar-who">
+                  <div class="sidebar-who-label">A chi serve</div>
+                  <div class="sidebar-who-text">Il cuore del kit. Adatto a tutti i livelli. Particolarmente utile a chi posta già ma non capisce perché i contenuti "non prendono" — spesso il problema è strutturale, non estetico.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUIDA 3 -->
+      <div class="accordion-item" data-index="2">
+        <button class="accordion-trigger" onclick="toggleAccordion(2)">
+          <div class="accordion-num">03</div>
+          <div class="accordion-icon-wrap">📅</div>
+          <div class="accordion-header-text">
+            <div class="accordion-title">Pianificazione &amp; Calendario</div>
+            <div class="accordion-subtitle">Il sistema in 90 minuti a settimana — strumenti gratuiti inclusi</div>
+          </div>
+          <div class="accordion-meta">
+            <div class="accordion-badge">Sistema + Template + Guide strumenti</div>
+            <div class="accordion-chevron">▾</div>
+          </div>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="acc-grid">
+              <div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Il metodo 90 minuti a settimana</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Il flusso di lavoro settimanale — passo dopo passo</div>
+                        <div class="topic-desc">Nel giorno di chiusura o la mattina prima del servizio: 30 min per decidere i contenuti della settimana con il registro. 30 min per scattare in blocco — 6-8 foto e 1-2 video bastano per 4-5 post. 30 min per scrivere le caption a mente fredda e programmare tutto. Da quel momento la settimana gira da sola. Checklist da stampare e usare ogni settimana: inclusa.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Scatta in blocco: sessione foto da 30 minuti</div>
+                        <div class="topic-desc">Non ogni giorno davanti ai piatti. Una volta a settimana, prima del servizio, quando la cucina è pulita e la luce è buona. Prepara 3-4 piatti, usa il treppiede, scatta 5-6 varianti di ognuno e scegli dopo. Con questo sistema hai materiale per tutta la settimana — e le foto sono più curate perché non le fai di fretta a servizio iniziato.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Scrivi le caption separatamente — mai durante la pubblicazione</div>
+                        <div class="topic-desc">Le caption scritte tardi la sera, dopo il servizio, si vedono. Riserva 30 minuti in un momento di calma per scriverle tutte insieme. Vengono meglio, sono più coerenti. Usa un documento condiviso — anche il blocco note del telefono — dove tieni le bozze pronte da copiare al momento della pubblicazione.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Il calendario editoriale</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Il template mensile — pronto da compilare</div>
+                        <div class="topic-desc">Il file Excel/Fogli incluso ha i 6 formati già distribuiti su 4 settimane in modo bilanciato: 2-3 post di prodotto, 1-2 dietro le quinte, 1 persone/team, 1 stagionalità. Colonne: data, piattaforma, tipo contenuto (feed/story/reel), argomento, stato (bozza/pronto/pubblicato), note. Non serve riempirlo tutto subito — serve avere un piano, non seguirlo rigidamente.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Il calendario stagionale annuale</div>
+                        <div class="topic-desc">Un secondo foglio del template mappa eventi e stagioni rilevanti per la ristorazione italiana mese per mese: tartufo bianco (ott-nov), carciofi (feb-apr), asparagi (apr-mag), sagre locali, festività (San Valentino, Pasqua, Natale, Ferragosto). Per ognuno: cosa comunicare con anticipo e come cavalcare la stagione senza essere banali. Chi pianifica con 3-4 settimane di anticipo non si trova mai senza idee.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Frequenza consigliata — la verità senza dogmi</div>
+                        <div class="topic-desc">Non esiste la frequenza giusta universale. Per la maggior parte dei ristoranti piccoli e medi: 3-4 post a settimana nel feed + Stories quotidiane nei giorni di servizio è già un ottimo risultato. Meglio 3 post curati che 7 improvvisati. La guida include una griglia frequenza × risultati attesi per aiutarti a scegliere il ritmo realistico per il tuo locale.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Strumenti per automatizzare e risparmiare tempo</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Programmare i post in anticipo — senza abbonamenti a pagamento</div>
+                        <div class="topic-desc">Meta offre uno strumento integrato e gratuito per programmare post su Instagram e Facebook con giorni di anticipo, direttamente dal browser o da un'app dedicata. Carichi foto, scrivi la caption, scegli data e ora — e te ne dimentichi. Guida illustrata passo-passo inclusa: dalla creazione dell'account Business alle prime programmazioni, con screenshot di ogni schermata.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">App per la pianificazione visiva del feed</div>
+                        <div class="topic-desc">Esistono applicazioni — alcune con piano gratuito sufficiente per un ristorante — che permettono di vedere come apparirà il feed prima di pubblicare, spostare i post come tessere di un puzzle e verificare l'effetto visivo complessivo. Utilissime per chi vuole mantenere una coerenza riconoscibile. La guida spiega cosa cercare in uno strumento di questo tipo per valutare quale fa per te — senza spendere soldi inutilmente.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Creare grafiche e Stories professionali in pochi minuti</div>
+                        <div class="topic-desc">Per chi vuole aggiungere testo alle Stories, creare annunci di eventi o offerte speciali con un layout professionale: esistono strumenti online accessibili da browser senza installare nulla, con template pronti per la ristorazione. Caratteristiche da cercare: template modificabili, libreria immagini, possibilità di salvare il tuo kit colori e logo per riusarlo ogni volta. Molti hanno piani gratuiti perfettamente sufficienti.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Editor video da smartphone — montaggio in 5 minuti</div>
+                        <div class="topic-desc">Esistono app gratuite (o con piano base gratuito) disponibili su iOS e Android che permettono di tagliare clip, unirle, aggiungere testo e musica direttamente dal telefono senza conoscere il montaggio. Alcune permettono anche di salvare preset per mantenere lo stesso stile visivo da un Reel all'altro. La guida indica le funzionalità essenziali da cercare per scegliere quella giusta.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Raccogliere i contenuti dei clienti (UGC) — il materiale gratuito</div>
+                        <div class="topic-desc">I clienti che postano foto nel tuo locale sono una risorsa enorme che quasi nessun ristorante sfrutta sistematicamente. Come monitorare i tag, come chiedere il permesso di ricondividere, come creare un hashtag dedicato al locale da comunicare in sala (sul menu o su una card sul tavolo) per raccogliere tutto in un posto. Le notifiche native di Instagram bastano — non serve acquistare strumenti aggiuntivi.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="acc-sidebar">
+                <div class="sidebar-card">
+                  <div class="sidebar-card-label">Risultato concreto</div>
+                  <div class="sidebar-card-text">I social diventano una routine prevedibile in 90 minuti a settimana. Niente più post improvvisati a tarda sera, niente più settimane di silenzio per mancanza di idee.</div>
+                </div>
+                <div class="sidebar-materials">
+                  <div class="sidebar-materials-label">Materiali inclusi</div>
+                  <div class="material-item">Guida PDF "Il metodo 90 minuti" con flusso di lavoro</div>
+                  <div class="material-item">Template calendario editoriale mensile (Excel / Fogli)</div>
+                  <div class="material-item">Calendario stagionale annuale per la ristorazione</div>
+                  <div class="material-item">Registro contenuti settimanale (template)</div>
+                  <div class="material-item">Checklist "sessione pianificazione" da stampare</div>
+                  <div class="material-item">Guida illustrata Meta Business Suite (con screenshot)</div>
+                </div>
+                <div class="sidebar-tools">
+                  <div class="sidebar-tools-label">Tipologie di strumenti consigliati</div>
+                  <div class="tool-item">
+                    <div class="tool-icon">📲</div>
+                    <div class="tool-body"><div class="tool-name">Scheduling di post</div><div class="tool-desc">Strumenti che permettono di programmare post su più piattaforme contemporaneamente. Cerca quelli con piano gratuito che coprono almeno Instagram e Facebook.</div></div>
+                  </div>
+                  <div class="tool-item">
+                    <div class="tool-icon">🖼️</div>
+                    <div class="tool-body"><div class="tool-name">Anteprima visiva del feed</div><div class="tool-desc">App che simulano come apparirà il feed prima di pubblicare. Utili per mantenere coerenza senza sforzo.</div></div>
+                  </div>
+                  <div class="tool-item">
+                    <div class="tool-icon">✏️</div>
+                    <div class="tool-body"><div class="tool-name">Creatori di grafiche</div><div class="tool-desc">Strumenti web/app con template professionali per Stories, annunci, locandine eventi. Molti con piani gratuiti sufficienti.</div></div>
+                  </div>
+                  <div class="tool-item">
+                    <div class="tool-icon">🎬</div>
+                    <div class="tool-body"><div class="tool-name">Editor video mobile</div><div class="tool-desc">App per tagliare, unire clip e aggiungere testo ai Reels dal telefono — senza competenze di montaggio.</div></div>
+                  </div>
+                </div>
+                <div class="sidebar-who">
+                  <div class="sidebar-who-label">A chi serve</div>
+                  <div class="sidebar-who-text">Per chi pubblica già in modo caotico. Per chi si ritrova a fare i post alle 22 dopo il servizio. Per chi vuole smettere di sentirsi in colpa ogni settimana che passa senza aver postato nulla.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUIDA 4 -->
+      <div class="accordion-item" data-index="3">
+        <button class="accordion-trigger" onclick="toggleAccordion(3)">
+          <div class="accordion-num">04</div>
+          <div class="accordion-icon-wrap">📱</div>
+          <div class="accordion-header-text">
+            <div class="accordion-title">Le Piattaforme che Contano</div>
+            <div class="accordion-subtitle">Instagram, Google Business, Facebook — guide operative illustrate</div>
+          </div>
+          <div class="accordion-meta">
+            <div class="accordion-badge">3 guide illustrate</div>
+            <div class="accordion-chevron">▾</div>
+          </div>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="acc-grid">
+              <div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Instagram — guida operativa per ristoranti</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Come funziona l'algoritmo — spiegato in modo onesto</div>
+                        <div class="topic-desc">L'algoritmo premia tre cose: la rilevanza per chi ti segue (interagisce con contenuti simili?), la coerenza (chi sparisce viene penalizzato), l'engagement nelle prime ore (più interazioni subito = maggiore distribuzione). Cosa non cambia nulla: postare a orari "magici", usare tutti e 30 gli hashtag, taggare account a caso. La guida smonta i miti più diffusi e si concentra su cosa vale davvero la pena fare.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Profilo Business: come configurarlo per un ristorante</div>
+                        <div class="topic-desc">Per un ristorante: sempre profilo Business. Permette di aggiungere il pulsante prenotazione, vedere le statistiche complete, programmare post da Meta Business Suite, inserire la categoria del locale. La guida spiega come passare da profilo personale a Business senza perdere follower e come configurare tutte le opzioni rilevanti: orari, indirizzo, link prenotazione, categoria merceologica.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Leggere le statistiche — i 3 numeri che contano davvero</div>
+                        <div class="topic-desc">Non tutti i dati sono ugualmente utili. Follower: crescono lentamente, non è un indicatore a breve termine. Reach: quante persone hanno visto il contenuto. Salvataggi e condivisioni: il segnale più forte che un contenuto era utile o interessante — molto più dei like. Come leggere le Insight di Instagram in 5 minuti a settimana per capire cosa funziona — senza diventare analisti di dati.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Google Business — il canale che nessuno cura</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Perché Google Business è più importante di Instagram per molti locali</div>
+                        <div class="topic-desc">Quando qualcuno cerca "ristorante [città]" su Google, il primo risultato è la scheda Google Business — non Instagram. Determina la prima impressione per chiunque cerchi attivamente un posto dove mangiare. Eppure il 70% dei ristoranti italiani ha la scheda incompleta, con foto vecchie o senza risposta alle recensioni. È un vantaggio competitivo enorme per chi lo fa bene — e quasi nessuno lo fa bene.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Ottimizzare la scheda — guida illustrata completa</div>
+                        <div class="topic-desc">Dalla rivendicazione della proprietà alla configurazione al 100%: nome, categoria primaria e secondarie, orari (inclusi festivi e variazioni stagionali), telefono, link prenotazione, menu, descrizione (come usare i 160 caratteri), attributi (dehors, wifi, carta di credito, accessibile, ecc.). Foto: almeno 10, aggiornate, che mostrano sala, cucina, piatti e persone. Screenshot di ogni schermata del pannello: inclusi.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">I post su Google Business — lo strumento più ignorato</div>
+                        <div class="topic-desc">Google Business permette di pubblicare aggiornamenti, offerte ed eventi visibili nella scheda a chiunque cerchi il locale. Durano 7 giorni. Pubblicarne uno a settimana (una novità del menu, un evento, una promozione) migliora la visibilità nei risultati locali. Come farlo: 5 minuti dal browser o dall'app dedicata. La guida spiega come strutturare ogni tipo di post per massimizzare la visibilità.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Gestione recensioni — il protocollo completo</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Rispondere alle recensioni positive — perché non basta "grazie"</div>
+                        <div class="topic-desc">La risposta a una recensione positiva non è solo per chi l'ha scritta — è letta da tutti i potenziali clienti. Una risposta personalizzata (che richiama un dettaglio specifico della recensione) comunica cura e attenzione. Template incluso: struttura in 3 parti — ringraziamento personalizzato, rimando al dettaglio citato, invito a tornare.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Rispondere alle recensioni negative — il metodo che non peggiora le cose</div>
+                        <div class="topic-desc">Regola d'oro: non difendersi in pubblico. Anche se il cliente ha torto. La risposta pubblica è letta da centinaia di potenziali clienti — e quello che comunicano non è "chi ha ragione" ma "come si comporta questo locale quando le cose vanno male". Il protocollo: riconoscere il disagio, ringraziare per il feedback, invitare a contattarsi in privato. Template per le 3 situazioni più comuni: incluso.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">La recensione falsa o aggressiva — cosa si può fare</div>
+                        <div class="topic-desc">Come segnalare una recensione palesemente falsa o che viola le linee guida di Google. Come rispondere alla recensione aggressiva senza abbassarsi al livello. Come aumentare le recensioni positive organicamente — perché la soluzione a una recensione negativa è averne 50 positive intorno. Il sistema più efficace: chiedere ai clienti soddisfatti prima che escano dal locale, non dopo.</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="acc-section">
+                  <div class="acc-section-label">Facebook nel 2025 — quando ancora serve</div>
+                  <ul class="topics-list">
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Per quale tipo di ristorante Facebook è ancora rilevante</div>
+                        <div class="topic-desc">Facebook ha un pubblico più anziano di Instagram ma più propenso a cercare attivamente ristoranti e condividere locali con amici. Se il tuo cliente tipo ha 40+ anni, abita nella zona e ci viene con la famiglia o per pranzi di lavoro: vale ancora. Se sei un locale giovane con clientela 25-35: Instagram è il canale primario, Facebook è solo il collegamento automatico.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Collegare Instagram a Facebook — senza raddoppiare il lavoro</div>
+                        <div class="topic-desc">Quando pubblichi su Instagram puoi condividere automaticamente su Facebook. Non funziona perfettamente per tutti i formati, ma per i post del feed è una soluzione efficiente. La guida spiega come configurare la condivisione automatica, quali contenuti ha senso sincronizzare e quali è meglio gestire separatamente per non compromettere la qualità su nessuna delle due piattaforme.</div>
+                      </div>
+                    </li>
+                    <li class="topic-item">
+                      <div class="topic-dot"><span></span></div>
+                      <div class="topic-body">
+                        <div class="topic-title">Gli eventi Facebook — ancora il posto migliore per promuoverli</div>
+                        <div class="topic-desc">Per serate speciali, cene a tema, eventi stagionali: gli eventi Facebook sono ancora il modo più efficace per raggiungere persone nella tua area geografica che non ti seguono. Permette di raccogliere "partecipo" e inviare promemoria automatici. Come creare un evento che funziona: titolo chiaro, foto d'impatto, descrizione concreta (cosa si mangia, quanto costa, come prenotare, cosa è incluso).</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="acc-sidebar">
+                <div class="sidebar-card">
+                  <div class="sidebar-card-label">Risultato concreto</div>
+                  <div class="sidebar-card-text">Sai come usare ogni piattaforma, con che frequenza e con quale obiettivo — senza disperdere energie su canali che non portano clienti al tuo tipo di locale.</div>
+                </div>
+                <div class="sidebar-materials">
+                  <div class="sidebar-materials-label">Materiali inclusi</div>
+                  <div class="material-item">Guida Instagram per ristoranti (PDF con screenshot)</div>
+                  <div class="material-item">Guida Google Business — ottimizzazione completa (PDF)</div>
+                  <div class="material-item">Protocollo recensioni — 3 template di risposta</div>
+                  <div class="material-item">Checklist "profilo Google al 100%"</div>
+                  <div class="material-item">Mappa piattaforme × obiettivi (da appendere)</div>
+                  <div class="material-item">Guida post su Google Business (PDF)</div>
+                </div>
+                <div class="sidebar-tools">
+                  <div class="sidebar-tools-label">Strumenti utili per questa guida</div>
+                  <div class="tool-item">
+                    <div class="tool-icon">🔔</div>
+                    <div class="tool-body"><div class="tool-name">Notifiche attive su tutte le piattaforme</div><div class="tool-desc">Instagram e Google Business inviano notifiche per ogni tag, menzione e recensione. Attivale — rispondere entro 24 ore fa differenza reale nella percezione del locale.</div></div>
+                  </div>
+                  <div class="tool-item">
+                    <div class="tool-icon">🔗</div>
+                    <div class="tool-body"><div class="tool-name">Link in bio aggregato</div><div class="tool-desc">App che raccolgono più link (prenotazione, menu, eventi, contatti) in una pagina semplice da mobile. Ideali per il link in bio di Instagram — ne esistono diverse con piano gratuito.</div></div>
+                  </div>
+                  <div class="tool-item">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-body"><div class="tool-name">Statistiche native — bastano</div><div class="tool-desc">Le Insight di Instagram e il pannello Google Business hanno tutto il necessario, gratuitamente. Non serve acquistare strumenti di analisi finché non superi i 2.000 follower.</div></div>
+                  </div>
+                </div>
+                <div class="sidebar-who">
+                  <div class="sidebar-who-label">A chi serve</div>
+                  <div class="sidebar-who-text">Per chi è attivo su Instagram ma non ha mai aperto Google Business. Per chi sa che dovrebbe rispondere alle recensioni ma non sa come farlo senza rischiare di peggiorare le cose.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- APPROCCIO -->
+<section id="approccio" class="approach-section section-pad">
+  <div class="wrap">
+    <div style="max-width:620px;">
+      <div class="eyebrow">Il metodo</div>
+      <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(28px,4vw,44px);line-height:1.1;color:var(--cream);margin-bottom:14px;">L'approccio Bedrock <em style="font-style:italic;color:var(--gold);">ai social</em></h2>
+      <p style="font-size:15px;line-height:1.75;color:rgba(245,240,232,0.45);max-width:540px;">Non insegniamo a fare follower. Insegniamo a costruire una presenza che porta clienti — con continuità, senza dipendere da nessun social media manager esterno.</p>
+    </div>
+    <div class="approach-grid">
+      <div class="approach-card">
+        <div class="approach-num">01</div>
+        <span class="approach-icon">🧭</span>
+        <div class="approach-title">Identità prima, contenuti dopo</div>
+        <div class="approach-text">Prima di toccare Instagram, stabiliamo chi sei e cosa vuoi comunicare. Un ristorante senza messaggio chiaro può postare ogni giorno e restare invisibile. Uno con un messaggio preciso viene ricordato anche con 3 post a settimana.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">02</div>
+        <span class="approach-icon">📦</span>
+        <div class="approach-title">Prodotto al centro, trend in secondo piano</div>
+        <div class="approach-text">Gli audio virali durano una settimana. Un locale che racconta la qualità dei suoi ingredienti, il lavoro in cucina e le persone che ci stanno dietro costruisce fiducia che dura anni. I trend si usano solo quando hanno senso per te — mai come strategia principale.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">03</div>
+        <span class="approach-icon">⚙️</span>
+        <div class="approach-title">Sistema, non improvvisazione</div>
+        <div class="approach-text">I social funzionano solo se diventano una routine gestibile. Il metodo Bedrock riduce tutto a 90 minuti a settimana con strumenti concreti: niente ispirazione dell'ultimo minuto, niente post alle 22 di venerdì sera dopo il servizio.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- A CHI SERVE -->
+<section id="chi-serve" class="who-section section-pad">
+  <div class="wrap">
+    <div class="who-grid">
+
+      <!-- LEFT: profili -->
+      <div>
+        <div class="eyebrow">A chi serve</div>
+        <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(26px,3.5vw,40px);line-height:1.1;color:var(--cream);margin-bottom:12px;">Per chi gestisce<br>un ristorante <em style="font-style:italic;color:var(--gold);">nel mondo reale.</em></h2>
+        <p style="font-size:14px;line-height:1.7;color:rgba(245,240,232,0.4);margin-bottom:32px;max-width:440px;">Non per chi ha già un social media manager. Per chi deve farlo da solo — e vuole farlo bene.</p>
+
+        <div class="persona-cards">
+          <div class="persona-card">
+            <div class="persona-role">Profilo 1</div>
+            <div class="persona-name">Il titolare che "non ha tempo per i social"</div>
+            <div class="persona-text">Sa che servono ma non sa da dove iniziare. Il kit è costruito su di lui: flusso in 90 min/settimana, strumenti gratuiti già illustrati, niente teoria — solo cose da fare subito.</div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-role">Profilo 2</div>
+            <div class="persona-name">Lo chef che vuole raccontare il proprio lavoro</div>
+            <div class="persona-text">Posta già, fa belle foto — ma i contenuti non prendono. Il problema è quasi sempre strutturale: manca il messaggio, non la qualità delle immagini. Questo kit dà la struttura narrativa che mancava.</div>
+          </div>
+          <div class="persona-card">
+            <div class="persona-role">Profilo 3</div>
+            <div class="persona-name">Il responsabile incaricato di "tenere i social vivi"</div>
+            <div class="persona-text">Ha buona volontà ma non ha un metodo. Postare ogni tanto non è una strategia. Il kit dà il sistema per essere efficace in poco tempo — senza diventare un esperto di marketing.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: deliverables -->
+      <div>
+        <div class="who-right-head">
+          <div class="eyebrow">Cosa porti a casa</div>
+          <h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(26px,3.5vw,40px);line-height:1.1;color:var(--cream);margin-bottom:8px;">Strumenti,<br>non slide.</h2>
+          <p style="font-size:14px;line-height:1.7;color:rgba(245,240,232,0.4);max-width:380px;">Ogni guida produce qualcosa di concreto da usare subito nel tuo locale.</p>
+        </div>
+        <ul class="deliverables-list">
+          <li class="deliverable-item">
+            <div class="deliverable-icon">📋</div>
+            <div>
+              <div class="deliverable-name">Scheda Identità Editoriale</div>
+              <div class="deliverable-desc">Il documento che fissa voce, stile, cliente ideale e messaggio. Si compila una volta e orienta ogni post da quel momento in poi.</div>
+            </div>
+          </li>
+          <li class="deliverable-item">
+            <div class="deliverable-icon">🗂️</div>
+            <div>
+              <div class="deliverable-name">Calendario editoriale mensile</div>
+              <div class="deliverable-desc">Template Excel con i 6 format già distribuiti su 4 settimane. Basta riempire gli spazi.</div>
+            </div>
+          </li>
+          <li class="deliverable-item">
+            <div class="deliverable-icon">✍️</div>
+            <div>
+              <div class="deliverable-name">10 strutture caption pronte</div>
+              <div class="deliverable-desc">Le formule per scrivere didascalie che raccontano il prodotto e portano alla prenotazione.</div>
+            </div>
+          </li>
+          <li class="deliverable-item">
+            <div class="deliverable-icon">📸</div>
+            <div>
+              <div class="deliverable-name">Guida foto con smartphone</div>
+              <div class="deliverable-desc">Luce, angolazioni, composizione, editing minimo. Scatti migliori con quello che hai già.</div>
+            </div>
+          </li>
+          <li class="deliverable-item">
+            <div class="deliverable-icon">⭐</div>
+            <div>
+              <div class="deliverable-name">Protocollo gestione recensioni</div>
+              <div class="deliverable-desc">3 template di risposta per le situazioni più comuni: positiva, negativa, aggressiva.</div>
+            </div>
+          </li>
+          <li class="deliverable-item">
+            <div class="deliverable-icon">🔍</div>
+            <div>
+              <div class="deliverable-name">Guida Google Business completa</div>
+              <div class="deliverable-desc">Ottimizzazione in 2 ore, manutenzione in 10 min/settimana. Con screenshot passo per passo.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="acquista" class="cta-section section-pad">
+  <div class="wrap">
+    <div class="cta-card">
+      <div>
+        <div class="cta-tag">Modulo Extra — Bedrock IQ</div>
+        <div class="cta-title">Gestione Social<br>per Ristoranti</div>
+        <p class="cta-sub">4 guide PDF operative, 6 template compilabili, 3 guide app illustrate. Accesso illimitato e aggiornamenti inclusi.</p>
+        <div class="cta-badges">
+          <div class="cta-badge">✓ 4 guide PDF</div>
+          <div class="cta-badge">✓ 6 template operativi</div>
+          <div class="cta-badge">✓ 3 guide app illustrate</div>
+          <div class="cta-badge">✓ Accesso illimitato</div>
+        </div>
+      </div>
+      <div class="cta-price-block">
+        <div class="cta-price"><span>€</span>127</div>
+        <div class="cta-price-label">Accesso illimitato</div>
+        <a href="#" class="btn-dark-cta">Acquista ora →</a>
+        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(15,14,12,0.4);margin-top:12px;text-align:center;">Incluso nel Pacchetto Completo</div>
+      </div>
+    </div>
+    <div class="cta-note">Se hai già il Pacchetto Completo Bedrock IQ, questo modulo è già incluso nel tuo accesso.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Bedrock</div>
+      <span class="footer-brand-tag">Strong foundations. Real results.</span>
+      <p class="footer-brand-text">Sistema di diagnostica e formazione operativa per ristoranti. Costruito da chi conosce la cucina da dentro.</p>
+    </div>
+    <div><div class="footer-col-title">Formazione</div><ul class="footer-links"><li><a href="https://bedrock-de2.pages.dev/">Bedrock IQ</a></li><li><a href="https://bedrock-de2.pages.dev/#iq">Tutti i moduli</a></li><li><a href="https://bedrock-de2.pages.dev/#iq">Pacchetti</a></li></ul></div>
+    <div><div class="footer-col-title">Strumenti</div><ul class="footer-links"><li><a href="https://bedrockhealth.netlify.app" target="_blank">Health Check</a></li><li><a href="https://bedrock-de2.pages.dev/#health-check">Report Operativo</a></li></ul></div>
+    <div><div class="footer-col-title">Info</div><ul class="footer-links"><li><a href="https://bedrock-de2.pages.dev/#iq">FAQ</a></li><li><a href="https://bedrock-de2.pages.dev/#contatti">Contatti</a></li><li><a href="https://bedrock-de2.pages.dev/">Privacy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 BEDROCK · STRONG FOUNDATIONS. REAL RESULTS.</div>
+    <div class="footer-copy">Tutti i diritti riservati</div>
+  </div>
+</footer>
+
+<script>
+function toggleAccordion(index) {
+  const items = document.querySelectorAll('.accordion-item');
+  const clicked = items[index];
+  const isOpen = clicked.classList.contains('open');
+  items.forEach(item => item.classList.remove('open'));
+  if (!isOpen) {
+    clicked.classList.add('open');
+    setTimeout(() => {
+      const top = clicked.getBoundingClientRect().top + window.scrollY - 100;
+      if (clicked.getBoundingClientRect().top < 80) window.scrollTo({ top, behavior: 'smooth' });
+    }, 60);
+  }
+}
+document.addEventListener('DOMContentLoaded', () => toggleAccordion(0));
+</script>
+</body>
+</html>
