@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bedrock IQ — Formazione per Ristoratori</title>
 <meta name="description" content="Corsi operativi per chef e titolari di ristorante. Food cost, sprechi, team, HACCP. Fondamenta solide. Risultati reali.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Bedrock IQ">
+<meta property="og:title" content="Bedrock IQ — Formazione per Ristoratori">
+<meta property="og:description" content="Corsi operativi per chef e titolari di ristorante. Food cost, sprechi, team, HACCP. Fondamenta solide. Risultati reali.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%230f0e0c%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Georgia,serif%22 font-size=%2220%22 font-weight=%22900%22 fill=%22%23c8a96e%22 text-anchor=%22middle%22%3EB%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "Corsi Bedrock IQ per ristoratori", "itemListElement": [{"@type": "ListItem", "position": 1, "item": {"@type": "Course", "name": "M1 — Food Cost Mastery", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: Food Cost Mastery.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}, {"@type": "ListItem", "position": 2, "item": {"@type": "Course", "name": "M2 — Zero Sprechi", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: Zero Sprechi.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}, {"@type": "ListItem", "position": 3, "item": {"@type": "Course", "name": "M3 — Cucina che Gira", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: Cucina che Gira.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}, {"@type": "ListItem", "position": 4, "item": {"@type": "Course", "name": "M4 — Team che Regge", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: Team che Regge.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}, {"@type": "ListItem", "position": 5, "item": {"@type": "Course", "name": "M5 — Ospite al Centro", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: Ospite al Centro.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}, {"@type": "ListItem", "position": 6, "item": {"@type": "Course", "name": "M6 — Locale Blindato", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: Locale Blindato.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}, {"@type": "ListItem", "position": 7, "item": {"@type": "Course", "name": "M7 — SOP & Procedure", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: SOP & Procedure.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}, {"@type": "ListItem", "position": 8, "item": {"@type": "Course", "name": "M8 — HACCP & Igiene", "inLanguage": "it", "description": "Modulo operativo Bedrock IQ per ristoratori: HACCP & Igiene.", "provider": {"@type": "Organization", "name": "Bedrock IQ", "url": "https://bedrock-de2.pages.dev/"}}}]}</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -413,6 +421,12 @@ footer{
   .hc-banner{grid-template-columns:1fr;}
   .nav-links{display:none;}
 }
+
+/* a11y: focus visibile da tastiera */
+:focus-visible{outline:3px solid #c8703a !important;outline-offset:2px;}
+
+/* a11y: contrasto (WCAG AA) — ink3/gold2 usati solo su sfondi chiari */
+:root{--ink3:#5e5e50;--gold2:#7a5f26;}
 </style>
 </head>
 <body>
@@ -430,6 +444,7 @@ footer{
   </div>
 </nav>
 
+<main id="main">
 <!-- HERO -->
 <div class="hero">
   <div class="hero-bg"></div>
@@ -556,7 +571,7 @@ footer{
     <div class="modules-grid">
 
       <!-- M1 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Food Cost & Controllo Costi</div>
@@ -588,7 +603,7 @@ footer{
       </div>
 
       <!-- M2 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Gestione Sprechi</div>
@@ -620,7 +635,7 @@ footer{
       </div>
 
       <!-- M3 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Stabilità Operativa</div>
@@ -652,7 +667,7 @@ footer{
       </div>
 
       <!-- M4 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Stabilità del Team</div>
@@ -684,7 +699,7 @@ footer{
       </div>
 
       <!-- M5 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Esperienza Cliente</div>
@@ -716,7 +731,7 @@ footer{
       </div>
 
       <!-- M6 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Stabilità Strutturale</div>
@@ -748,7 +763,7 @@ footer{
       </div>
 
       <!-- M7 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Standard Operativi</div>
@@ -780,7 +795,7 @@ footer{
       </div>
 
       <!-- M8 -->
-      <div class="mod-card" onclick="toggleMod(this)">
+      <div class="mod-card" onclick="toggleMod(this)" role="button" tabindex="0" aria-expanded="false">
         <div class="mod-header">
           <div class="mod-meta">
             <div class="mod-tag"><span class="dot"></span>Igiene & Sicurezza Alimentare</div>
@@ -835,7 +850,7 @@ footer{
         <div class="pkg-price-wrap">
           <div class="pkg-price">€47</div>
           <div class="pkg-price-note">corso standalone</div>
-          <a href="#" class="pkg-btn">Inizia qui</a>
+          <a href="https://bedrock-de2.pages.dev/#contatti" class="pkg-btn">Inizia qui</a>
         </div>
       </div>
 
@@ -850,7 +865,7 @@ footer{
         <div class="pkg-price-wrap">
           <div class="pkg-price">€147</div>
           <div class="pkg-price-note">vs €47 + fino a €127 separati</div>
-          <a href="#" class="pkg-btn">Scegli il modulo</a>
+          <a href="https://bedrock-de2.pages.dev/#contatti" class="pkg-btn">Scegli il modulo</a>
         </div>
       </div>
 
@@ -867,7 +882,7 @@ footer{
         <div class="pkg-price-wrap">
           <div class="pkg-price">€397</div>
           <div class="pkg-price-note">vs €448 separati · risparmi €51</div>
-          <a href="#" class="pkg-btn">Acquista ora</a>
+          <a href="https://bedrock-de2.pages.dev/#contatti" class="pkg-btn">Acquista ora</a>
         </div>
       </div>
 
@@ -883,7 +898,7 @@ footer{
         <div class="pkg-price-wrap">
           <div class="pkg-price">€397</div>
           <div class="pkg-price-note">vs €448 separati · risparmi €51</div>
-          <a href="#" class="pkg-btn">Acquista ora</a>
+          <a href="https://bedrock-de2.pages.dev/#contatti" class="pkg-btn">Acquista ora</a>
         </div>
       </div>
 
@@ -898,7 +913,7 @@ footer{
         <div class="pkg-price-wrap">
           <div class="pkg-price">€697</div>
           <div class="pkg-price-note">vs €896 separati · risparmi €199</div>
-          <a href="#" class="pkg-btn">Acquista ora</a>
+          <a href="https://bedrock-de2.pages.dev/#contatti" class="pkg-btn">Acquista ora</a>
         </div>
       </div>
 
@@ -915,7 +930,7 @@ footer{
         <div class="pkg-price-wrap">
           <div class="pkg-price">€1.197</div>
           <div class="pkg-price-note">il percorso con supporto diretto</div>
-          <a href="#" class="pkg-btn" style="background:var(--ink);color:var(--cream);">Contattami</a>
+          <a href="https://bedrock-de2.pages.dev/#contatti" class="pkg-btn" style="background:var(--ink);color:var(--cream);">Contattami</a>
         </div>
       </div>
 
@@ -938,6 +953,8 @@ footer{
   </div>
 </div>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -950,9 +967,17 @@ footer{
 <script>
 function toggleMod(card){
   const isOpen = card.classList.contains('open');
-  document.querySelectorAll('.mod-card').forEach(c=>c.classList.remove('open'));
-  if(!isOpen) card.classList.add('open');
+  document.querySelectorAll('.mod-card').forEach(c=>{c.classList.remove('open');c.setAttribute('aria-expanded','false');});
+  if(!isOpen){card.classList.add('open');card.setAttribute('aria-expanded','true');}
 }
+</script>
+<script>
+/* a11y: elementi role=button attivabili con Invio/Spazio */
+document.addEventListener('keydown',function(e){
+  var t=e.target;
+  if(!t||t.getAttribute('role')!=='button'||t.tagName==='BUTTON'||t.tagName==='A')return;
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();t.click();}
+});
 </script>
 </body>
 </html>

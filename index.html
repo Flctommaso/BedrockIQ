@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <!-- Google Translate auto-detect -->
 <meta name="google" content="notranslate">
@@ -18,6 +18,15 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <title>Bedrock — Strong foundations. Real results.</title>
+<meta name="description" content="Bedrock IQ: diagnosi operativa gratuita e formazione pratica per chef e titolari di ristorante. Fondamenta solide, risultati veri.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Bedrock IQ">
+<meta property="og:title" content="Bedrock IQ — Diagnosi e formazione per ristoratori">
+<meta property="og:description" content="Bedrock IQ: diagnosi operativa gratuita e formazione pratica per chef e titolari di ristorante. Fondamenta solide, risultati veri.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%230f0e0c%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Georgia,serif%22 font-size=%2220%22 font-weight=%22900%22 fill=%22%23c8a96e%22 text-anchor=%22middle%22%3EB%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Bedrock IQ", "slogan": "Strong foundations. Real results.", "url": "https://bedrock-de2.pages.dev/", "areaServed": "IT", "inLanguage": "it", "description": "Diagnosi operativa gratuita e formazione pratica per chef e titolari di ristorante."}</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -1314,6 +1323,14 @@ footer {
   .lang-selector { display: none; }
 }
 
+
+/* a11y: focus visibile da tastiera */
+:focus-visible{outline:3px solid #c8703a !important;outline-offset:2px;}
+
+/* a11y: contrasto testo su sfondi chiari (WCAG AA) */
+#health-check .eyebrow,#contatti .eyebrow,#contatti .contact-info-label{color:#7a5f26;}
+#health-check .lead-light,#contatti .lead-light,#contatti .contact-info-sub,#contatti .contact-note-text{color:#6a5f4f;}
+.verdict-chip{background:#9a5426;}
 </style>
 </head>
 <body>
@@ -1339,20 +1356,20 @@ footer {
 
   <!-- Language selector -->
   <div id="google_translate_element" style="display:none;"></div>
-  <div class="lang-selector" id="langSelector" title="Change language">
+  <div class="lang-selector" id="langSelector" title="Change language" role="button" tabindex="0" aria-haspopup="true" aria-label="Cambia lingua">
     <span class="lang-globe">🌐</span>
     <span class="lang-label">IT</span>
   </div>
 
   <!-- Hidden lang dropdown -->
   <div class="lang-dropdown" id="langDropdown">
-    <div class="lang-option active" onclick="setLang('it','IT')">🇮🇹 Italiano</div>
-    <div class="lang-option" onclick="setLang('en','EN')">🇬🇧 English</div>
-    <div class="lang-option" onclick="setLang('es','ES')">🇪🇸 Español</div>
-    <div class="lang-option" onclick="setLang('fr','FR')">🇫🇷 Français</div>
-    <div class="lang-option" onclick="setLang('de','DE')">🇩🇪 Deutsch</div>
+    <div role="button" tabindex="0" class="lang-option active" onclick="setLang('it','IT')">🇮🇹 Italiano</div>
+    <div role="button" tabindex="0" class="lang-option" onclick="setLang('en','EN')">🇬🇧 English</div>
+    <div role="button" tabindex="0" class="lang-option" onclick="setLang('es','ES')">🇪🇸 Español</div>
+    <div role="button" tabindex="0" class="lang-option" onclick="setLang('fr','FR')">🇫🇷 Français</div>
+    <div role="button" tabindex="0" class="lang-option" onclick="setLang('de','DE')">🇩🇪 Deutsch</div>
   </div>
-  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu" role="button" tabindex="0">
     <span></span><span></span><span></span>
   </div>
 </nav>
@@ -1367,6 +1384,7 @@ footer {
 </div>
 
 
+<main id="main">
 <!-- ══════════════════════════════════════
   HERO
 ══════════════════════════════════════ -->
@@ -1883,6 +1901,8 @@ footer {
 <!-- ══════════════════════════════════════
   FOOTER
 ══════════════════════════════════════ -->
+</main>
+
 <footer>
   <div class="footer-grid">
     <div>
@@ -2039,6 +2059,14 @@ function setLang(langCode, label) {
   }
 })();
 
+</script>
+<script>
+/* a11y: elementi role=button attivabili con Invio/Spazio */
+document.addEventListener('keydown',function(e){
+  var t=e.target;
+  if(!t||t.getAttribute('role')!=='button'||t.tagName==='BUTTON'||t.tagName==='A')return;
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();t.click();}
+});
 </script>
 </body>
 </html>
